@@ -19,11 +19,12 @@ router.post(
   async (req, res) => {
   try {
 
+
     const errors = validationResult(req)
     if(!errors.isEmpty()) {
       return res.status(400).json({
         errors: errors.array(),
-        message: 'Некоректные данные при решистрации'
+        message: 'Некоректные данные при регистрации'
       })
     }
 
@@ -33,6 +34,8 @@ router.post(
       return res.status(400).json({message: 'Такой пользователь уже существует'})
     }
     const hashedPassword = await bcrypt.hash(password, 12)
+
+    // TODO: Расширить на никнейм и ссылка на аватар
     const user = new User({
       email, password : hashedPassword
     })

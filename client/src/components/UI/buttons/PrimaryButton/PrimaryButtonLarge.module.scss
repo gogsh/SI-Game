@@ -1,0 +1,19 @@
+.PrimaryButton {
+  color: #ffff;
+  font-size: 22px;
+  font-weight: bold;
+  width: 100%;
+  height: 56px;
+  background: #3A71CD;
+  border-radius: 6px;  
+  transition: background 0.3s ease;          
+  &:hover {
+  background: #3268c5;
+  box-shadow: 0px 0px 10px rgba(58, 113, 205, 0.1);
+  }
+}
+
+.container {
+  width: 100%;
+  margin: 10px 0 10px 0;
+}

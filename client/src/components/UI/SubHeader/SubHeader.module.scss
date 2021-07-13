@@ -1,0 +1,33 @@
+.SubHeader {
+  width: 100%;
+  display: flex;
+  font-size: 22px;
+  padding: 0 20px 0 20px ;
+  height: 86px;
+  align-items: center;
+  border-bottom: 1px solid #ECECEC;;
+  .left {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+    > span {
+      text-align: left;
+      color: rgba(0, 0, 0, 0.2);
+
+    }
+  }
+  .right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    > span {
+      text-align: right;
+      color: rgba(0, 0, 0, 0.2);
+    }
+  }
+}

@@ -1,0 +1,11 @@
+.Link {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #3A71CD;
+  > a {
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

@@ -28,7 +28,7 @@ router.post(
       })
     }
 
-    const { email, password } = req.body
+    const { email, password, nickname, avatarLink } = req.body
     const candidate = await User.findOne({ email })
     if(candidate) {
       return res.status(400).json({message: 'Такой пользователь уже существует'})
@@ -37,7 +37,7 @@ router.post(
 
     // TODO: Расширить на никнейм и ссылка на аватар
     const user = new User({
-      email, password : hashedPassword
+      email, password : hashedPassword, nickname, avatarLink
     })
     await user.save()
     res.status(201).json({message: 'Пользователь создан'})
@@ -82,8 +82,7 @@ router.post(
         config.get('jwtSecret'),
         { expiresIn: '1h' }
       )
-
-      res.json({ token, userId: user.id })
+      res.json({ token, userId: user.id, nickname: user.nickname, avatarLink: user.avatarLink })
 
 
   

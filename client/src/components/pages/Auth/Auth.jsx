@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react'
 import classes from './Auth.module.scss'
 import PrimaryButton from '../../UI/buttons/PrimaryButton/PrimaryButtonLarge'
-import SecondaryButton from '../../UI/buttons/SecondaryButton/SecondaryButtonLarge'
 import ImputLarge from '../../UI/inputs/InputLarge/ImputLarge'
 import { useHttp } from '../../../hooks/http.hook'
 import { AuthContext } from '../../../context/AuthContext'
+import Link from '../../UI/Links/Link/Link'
+import { chatSocket } from '../../../socket'
 
 //toast
 import { ToastContainer, toast } from 'react-toastify'
@@ -15,10 +16,15 @@ function Auth() {
   const auth = useContext(AuthContext)
   const { loading, request, error } = useHttp()
   const [form, setForm] = useState({
-    email: '', password: ''
+    email: '', password: '', nickname: '', avatarLink: ''
   })
+  const [isRegistration, setRegistration] = useState(false)
 
-  
+  const isRegistraitionHandler = event => {
+    setRegistration(!isRegistration)
+  }
+
+
   const changeHandler = event => {
     setForm({ ...form, [event.target.name]: event.target.value })
   }
@@ -26,64 +32,115 @@ function Auth() {
 
   const registerHandler = async () => {
     try {
-      const data = await request('/api/auth/register', 'POST', {...form})
-      if(data) {
+      const data = await request('/api/auth/register', 'POST', { ...form })
+      if (data) {
         toast(data.message)
+        setRegistration(!isRegistration)
       }
-    } catch (e) { 
-      if(error) {
+    } catch (e) {
+      if (error) {
         toast.error(error)
       }
-     }
+    }
   }
 
-  const loginHandler = async (params) => {
+  const loginHandler = async () => {
     try {
-      const data = await request('/api/auth/login', 'POST', {...form})
-      auth.login(data.token, data.userId)
+      const data = await request('/api/auth/login', 'POST', { ...form })
+      // 24h token
+      let date = new Date(new Date().getTime() + 43200 * 1000)
+      auth.login(data.token, data.userId, date, data.nickname, data.avatarLink)
+      
+      chatSocket.emit('CHAT:JOIN', {nickname: data.nickname, id: 'main'})
+
     } catch (e) {
-      if(error) {
-        toast.error(error)        
+      if (error) {
+        toast.error(error)
       }
     }
   }
 
   return (
     <div className={classes.Auth}>
-      <ToastContainer></ToastContainer>      
+      <ToastContainer></ToastContainer>
       <div className={classes.container}>
-        <div className={classes.inputs_container}>
-          <ImputLarge
-            placeholder={'email'}
-            type={'text'}
-            name={'email'}
-            onChange={event => changeHandler(event)}
-            disabled={loading}
-            
-          />
-          <ImputLarge
-            placeholder={'password'}
-            type={'password'}
-            name={'password'}
-            onChange={event => changeHandler(event)}
-            disabled={loading}
+        {
+          !isRegistration
+            ? <div className={classes.inputs_container}>
+              <ImputLarge
+                placeholder={'email'}
+                type={'text'}
+                name={'email'}
+                onChange={event => changeHandler(event)}
+                disabled={loading}
 
-          />
-          <PrimaryButton
-            text={'Войти'}
-            onClick={loginHandler}
-            disabled={loading}
-          />
-          <SecondaryButton
-            text='Зарегистрироваться'
-            onClick={registerHandler}
-            disabled={loading}
-          />
-        </div>
+              />
+              <ImputLarge
+                placeholder={'password'}
+                type={'password'}
+                name={'password'}
+                onChange={event => changeHandler(event)}
+                disabled={loading}
+
+              />
+              <PrimaryButton
+                text={'Войти'}
+                onClick={loginHandler}
+                disabled={loading}
+              />
+              <Link
+              text = {'Создать аккаунт'}
+              onClick = {isRegistraitionHandler}
+              />
+            </div> // регистрация
+            : <div className={classes.inputs_container}>
+              <ImputLarge
+                placeholder={'email'}
+                type={'text'}
+                name={'email'}
+                onChange={event => changeHandler(event)}
+                disabled={loading}
+
+              />
+              <ImputLarge
+                placeholder={'password'}
+                type={'password'}
+                name={'password'}
+                onChange={event => changeHandler(event)}
+                disabled={loading}
+
+              />
+              <ImputLarge
+                placeholder={'nickname'}
+                type={'text'}
+                name={'nickname'}
+                onChange={event => changeHandler(event)}
+                disabled={loading}
+
+              />
+              <ImputLarge
+                placeholder={'Ссылка на аватарку'}
+                type={'text'}
+                name={'avatarLink'}
+                onChange={event => changeHandler(event)}
+                disabled={loading}
+
+              />
+              <PrimaryButton
+                text={'Зарегистрироваться'}
+                onClick={registerHandler}
+                disabled={loading}
+              />
+              <Link
+              text = {'У меня уже есть аккаунт'}
+              onClick = {isRegistraitionHandler}
+              />
+            </div>
+        }
       </div>
-      
+
     </div>
-    
+
   )
 }
 

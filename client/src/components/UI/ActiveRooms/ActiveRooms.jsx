@@ -16,7 +16,6 @@ function ActiveRooms(props) {
 
       </SubHeader>
       {props.rooms.map((item, index) => {
-        console.log(item)
         return (
           <Room
           key = {index}

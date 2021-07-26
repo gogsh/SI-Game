@@ -1,5 +1,4 @@
 import { useState, useCallback, useEffect } from "react"
-import { chatSocket } from "../socket"
 
 
 const storageName = 'userData'

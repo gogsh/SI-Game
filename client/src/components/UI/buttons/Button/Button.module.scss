@@ -1,0 +1,48 @@
+.container {
+  width: 100%;
+  margin: 10px 0 10px 0;
+}
+.smallPrimaryButton {
+  padding: 0 15px 2px 15px;
+  color: #ffff;
+  font-size: 16px;
+  width: 100%;
+  height: 38px;
+  background: #3A71CD;
+  border-radius: 2px;  
+  transition: background 0.3s ease;          
+  &:hover {
+  background: #3268c5;
+  box-shadow: 0px 0px 10px rgba(58, 113, 205, 0.1);
+  }
+}
+
+.smallErrorButton {
+  padding: 0 15px 2px 15px;
+  color: #ffff;
+  font-size: 16px;
+  width: 100%;
+  height: 38px;
+  background: #E04F60;
+  border-radius: 2px;  
+  transition: background 0.3s ease;          
+  &:hover {
+  background: #c03b4b;
+  box-shadow: 0px 0px 10px rgba(204, 204, 204, 0.1);
+  }
+}
+
+.smallSecondarySuccessButton {
+  padding: 0 15px 2px 15px;
+  color: rgba(33, 179, 111, 0.67);
+  font-size: 16px;
+  width: 100%;
+  height: 38px;
+  background: #ffffff;
+  border-radius: 2px;  
+  transition: background 0.3s ease;    
+  border: 1px solid #67CC9C;      
+  &:hover {
+  box-shadow: 0px 0px 10px rgba(21, 134, 68, 0.1);
+  }
+}

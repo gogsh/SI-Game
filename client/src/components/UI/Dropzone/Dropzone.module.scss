@@ -1,0 +1,72 @@
+.DropzoneNormal {
+  background: rgba(58, 113, 205, 0.05);
+  height: 100%;
+  margin: 0 20px 20px 20px;
+  border: 1px dashed #3a71cd;
+  box-sizing: border-box;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  align-items: center;
+  font-size: 18px;
+  line-height: 22px;
+  color: #3a71cd;
+}
+
+.DropzoneError {
+  background: rgba(216, 81, 100, 0.1);
+  height: 100%;
+  margin: 0 20px 20px 20px;
+  border: 1px dashed #e04f60;
+  box-sizing: border-box;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  align-items: center;
+  font-size: 18px;
+  line-height: 22px;
+  color: #e04f60;
+}
+
+.DropzoneUploaded {
+  background: rgba(71, 253, 162, 0.05);
+  height: 100%;
+  margin: 0 20px 20px 20px;
+  border: 1px dashed #3acd5f;
+  box-sizing: border-box;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  align-items: center;
+  font-size: 16px;
+  line-height: 22px;
+  color: #3acd5f;
+}
+
+.Draged {
+  background: rgba(255, 255, 255, 0.05);
+  height: 100%;
+  margin: 0 20px 20px 20px;
+  border: 1px dashed #3a71cd;
+  box-sizing: border-box;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 20px rgba(58, 113, 205, 0.3);
+
+  align-items: center;
+  font-size: 24px;
+  line-height: 22px;
+  color: #3a71cd;
+  
+}

@@ -1,14 +1,28 @@
 const express = require('express')
 const config = require('config')
 const mongoose = require('mongoose')
+const multer  = require("multer");
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '.zip') //Appending .jpg
+  }
+})
+
 
 const app = express()
 
 
 app
   .use(express.json({ extended: true }))
+  .use(multer({storage: storage}).single("file"))
   .use('/api/auth', require('./routes/auth.routes'))
+  .use('/api/upload', require('./routes/upload.routes'))
   .use(require('cors')())
+  
 
 const DEV_SERVER_PORT = config.get('port') || 5000
 
@@ -31,16 +45,15 @@ chat.on('connection', (socket) => {
     chatData.get('users').set(nickname, socket.id)
   })
 
-  socket.on('CHAT:NEW_MESSAGE', ({nickname, text}) => {
+  socket.on('CHAT:NEW_MESSAGE', ({nickname, text, avatarLink}) => {
     const obj = {
       nickname,
-      text
+      text,
+      avatarLink
     }
     chatData.get('messages').push(obj) 
     chat.emit('CHAT:NEW_MESSAGE', obj) 
-  })
-     
-  
+  })  
 
   socket.on('disconnect', function () {
     console.log('A user disconnected', socket.id);

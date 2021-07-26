@@ -35,7 +35,6 @@ router.post(
     }
     const hashedPassword = await bcrypt.hash(password, 12)
 
-    // TODO: Расширить на никнейм и ссылка на аватар
     const user = new User({
       email, password : hashedPassword, nickname, avatarLink
     })

@@ -1,0 +1,67 @@
+.Upload {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+  > label {
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }  
+}
+
+.UploadError {  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;  
+  > label {
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
+
+.Upload_input {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+  > label {
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
+
+.Upload_succes {  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  > h1 {
+    font-size: 24px;
+  }
+  > span {
+    margin-top: 10px;
+  }
+  > label {
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+  
+}
+
+.Form {
+  background: rgb(255, 255, 255);
+  height: 180px;
+  margin: 0 0 20px 0;  
+}

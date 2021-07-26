@@ -11,7 +11,6 @@ import { chatSocket } from '../../../socket'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-// TODO: Расширить регистрацию, прикрутить аватар, никнем и проч.
 function Auth() {
   const auth = useContext(AuthContext)
   const { loading, request, error } = useHttp()
@@ -47,7 +46,7 @@ function Auth() {
   const loginHandler = async () => {
     try {
       const data = await request('/api/auth/login', 'POST', { ...form })
-      // 24h token
+      // 12h token
       let date = new Date(new Date().getTime() + 43200 * 1000)
       auth.login(data.token, data.userId, date, data.nickname, data.avatarLink)
       

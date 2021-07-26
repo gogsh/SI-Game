@@ -21,6 +21,7 @@ function Main() {
   const Auth = useContext(AuthContext) 
   const [messages, dispatch] = useReducer(reducer, [])
   
+  
 
   const addMessage = (message) => {
     console.log('from back',message)

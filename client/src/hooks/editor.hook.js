@@ -14,6 +14,7 @@ export const useEditor = () => {
         throw new Error(data.message || 'Что-то пошло не так')
       }
       setLoading(false)
+      console.log(JSON.parse(data).package)
       return data
 
     } catch (e) {

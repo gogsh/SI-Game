@@ -4,15 +4,17 @@ import HintIcon from '../../Icon/HintIcon'
 
 function Input(props) {
   return (
-    <div className ={classes.Input}>
+    <div className={classes.Input}>
       <span>{props.lableText}</span>
-      <HintIcon
-        name={'question'}
-        color={'#ECECEC'}
-        size={25}
-        hint = {props.hint}
-      />
-      <input type="text" onChange={props.changeHandler} />
+      <div className={classes.Input_rightSide}>
+        <HintIcon
+          name={'question'}
+          color={'#ECECEC'}
+          size={25}
+          hint={props.hint}
+        />
+        <input type="text" onChange={props.changeHandler} value={props.data} />
+      </div>
     </div>
   )
 }

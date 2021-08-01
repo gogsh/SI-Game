@@ -6,7 +6,9 @@ import Dropdown from '../../../UI/Dropdown/Dropdown'
 import Textarea from '../../../UI/Textarea/Textarea'
 
 
-function EditorForm() {
+function EditorForm(props) {
+ 
+
   return (
     <form className={classes.EditorForm}>
       {/* <SubHeader
@@ -18,28 +20,45 @@ function EditorForm() {
           <Input
             lableText={'Название'}
             hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
+            data={props.state.name}
+            changeHandler = {props.changeHandlers.name}
+          />
+          <Input
+            lableText={'Логотип'}
+            hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
+            data={props.state.logo}
+            changeHandler = {props.changeHandlers.logo}
           />
           <Textarea
             lableText={'Описание'}
             hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
-
+            text = {props.state.discription}
           />
         </div>
         <div className={classes.EditorForm_header_rightside}>
           <Dropdown
             lableText={'Кол-во раундов'}
             hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
-            valuesArr={[1, 2, 3, 4, 5, 6]}
+            valuesArr={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+            defaultValue={props.state.numberOfRounds}
           />
           <Dropdown
             lableText={'Тем в раунде'}
             hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
-            valuesArr={[1, 2, 3, 4, 5, 6]}
+            valuesArr={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+            defaultValue={props.state.numberOfThemes}
           />
           <Dropdown
             lableText={'Вопросов на тему'}
             hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
-            valuesArr={[1, 2, 3, 4, 5, 6]}
+            valuesArr={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+            defaultValue={props.state.numberOfQuestions}
+          />
+          <Dropdown
+            lableText={'Сложность'}
+            hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
+            valuesArr={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+            defaultValue={props.state.difficulty}
           />
 
         </div>

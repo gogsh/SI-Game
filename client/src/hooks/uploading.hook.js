@@ -14,8 +14,7 @@ export const useUploading = () => {
         throw new Error(data.message || 'Что-то пошло не так')
       }
       setLoading(false)
-      const test = {}
-      console.log(JSON.parse(data))
+      // console.log(JSON.parse(data))
       return data
 
     } catch (e) {

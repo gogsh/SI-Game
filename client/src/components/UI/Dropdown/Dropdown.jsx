@@ -11,14 +11,14 @@ function Dropdown(props) {
         name={'question'}
         color={'#ECECEC'}
         size={25}
-        hint = {props.hint}
+        hint={props.hint}
       />
-      <select type="text" onChange={props.changeHandler}>
+      <select type="text" onChange={props.changeHandler} value={props.defaultValue}>
         {
-          props.valuesArr.map(item => {
-            return <option value="123">{item}</option>
+          props.valuesArr.map(item => {            
+            return <option  key={item} value={item}>{item}</option>
           })
-        }        
+        }
       </select>
     </div>
   )

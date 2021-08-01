@@ -1,5 +1,8 @@
 const { Router, response } = require('express')
 const router = Router()
+const Pack = require('../models/Pack/Pack')
+const config = require('config')
+
 
 const JSZip = require("jszip"),
   zip = new JSZip(),
@@ -7,6 +10,80 @@ const JSZip = require("jszip"),
   path = require('path'),
   convert = require('xml-js')
 
+
+function generateNormalData(json) {
+  const normalData = {
+    info: null,
+    rounds: []
+  }
+  const data = JSON.parse(json).package
+  normalData.info = {
+    author: data.info.authors.author._text,
+    date: data._attributes.date,
+    difficulty: data._attributes.difficulty,
+    logo: data._attributes.logo,
+    name: data._attributes.name
+  }
+  data.rounds.round.forEach((round, index, arr) => {
+    if (index === data.rounds.round.length - 1) {
+      const final = round.themes.theme
+
+      let fixedFinal = {}
+      if (Array.isArray(final)) { 
+
+        const themesArr = final.map(theme => {
+          return {
+            themeName: theme._attributes.name || 'NoName',
+            question: {
+              questionContent: Array.isArray(theme.questions.question.scenario.atom) ? theme.questions.question.scenario.atom : theme.questions.question.scenario.atom._text,
+              answer: theme.questions.question.right.answer,
+              price: theme.questions.question._attributes.price
+            },
+          }
+        })
+        fixedFinal = {
+          FinalName: final?._attributes?.name || 'FINAL',
+          themes: themesArr
+        }
+      } else {
+        fixedFinal = {
+          FinalName: final._attributes.name,
+          question: {
+            questionContent: Array.isArray(final.questions.question.scenario.atom) ? final.questions.question.scenario.atom : final.questions.question.scenario.atom._text,
+            answer: final.questions.question.right.answer,
+            price: final.questions.question._attributes.price,
+          },
+        }
+      }
+
+      normalData.rounds.push(fixedFinal)
+      return
+    }
+
+    const themesArr = round.themes.theme.map(theme => {
+      const questions = theme.questions.question.map(question => {
+        return {
+          questionContent: Array.isArray(question.scenario.atom) ? question.scenario.atom : question.scenario.atom._text,
+          answer: question.right.answer,
+          price: question._attributes.price
+        }
+      })
+      return {
+        themeName: theme._attributes.name,
+        questions: questions,
+
+      }
+    })
+    const fixedRound = {
+      RoundName: round._attributes.name,
+      themes: themesArr
+    }
+    normalData.rounds.push(fixedRound)
+  })
+
+  console.log(normalData)
+  return JSON.stringify(normalData)
+}
 
 
 router.post(
@@ -40,24 +117,34 @@ router.post(
             }
           })
           // Конвертируем в JSON
-          jsonData = convert.xml2json(xmlData, {compact: true})
+          jsonData = convert.xml2json(xmlData, { compact: true })
 
           // TODO: Если есть картинки - загрузить на хостинг
 
           // Отправляем на сервер
-          res.status(201).json(jsonData)
+          let normalData = generateNormalData(jsonData)
+          res.status(201).json(normalData)
 
           // Удаляем
           fs.unlink(`./uploads/${fileName}`, err => {
             if (err) throw err
             console.log(`Файл ${fileName} успешно удалён`)
           })
-        })        
+        })
       })
-
-      console.log('data:', req.file)
-
-      
+      // const pack = new Pack({
+      //   info: {
+      //     author: 'Иван',
+      //     date: '12.32.2017',
+      //     difficulty: 5,
+      //     logo: '//LInk.jpg',
+      //     name: 'SuperPack'
+      //   },
+      //   rounds: [
+      //     [123], [123]
+      //   ]
+      // })
+      // pack.save()
 
     } catch (e) {
       res.status(500).json({ message: 'Something goes wrong, try again' })

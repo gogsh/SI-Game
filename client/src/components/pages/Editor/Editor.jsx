@@ -1,12 +1,10 @@
 import React, { useContext, useEffect, useState, useRef} from 'react'
 import { AuthContext } from '../../../context/AuthContext'
-import { EditorContext } from '../../../context/EditorContext'
-import { useEditor } from '../../../hooks/editor.hook'
-import { useHttp } from '../../../hooks/http.hook'
+import { UploadingContext } from '../../../context/UploadingContext'
+import { useUploading } from '../../../hooks/uploading.hook'
 
 
 import classes from './Editor.module.scss'
-
 
 import LargeColumn from '../../hoc/Layout/columns/LargeColumn'
 import SmallColumn from '../../hoc/Layout/columns/SmallColumn'
@@ -14,13 +12,14 @@ import SmallProfile from '../../UI/profile/SmallProfile/SmallProfile'
 import Navbar from '../../UI/Navbar/Navbar'
 import About from '../../UI/About/About'
 import Upload from '../../UI/Upload/Upload'
+import EditorForm from './EditorForm/EditorForm'
 
 
 
 function Editor() {
   const Auth = useContext(AuthContext)  
   const [isUploaded, setUploaded] = useState(false)
-  const { loading, request, error } = useEditor()
+  const { loading, request, error } = useUploading()
   const [isDropzoneFocused, setDropzoneFocuse] = useState(false)
 
   const [selectedFile, setSelectedFile] = useState(false)
@@ -67,7 +66,7 @@ function Editor() {
   
 
   return (
-    <EditorContext.Provider value = {[]}>
+    <UploadingContext.Provider value = {[]}>
       <div className={classes.Editor}>
         <SmallColumn>
           <SmallProfile
@@ -87,7 +86,6 @@ function Editor() {
               dragLeaveHandler = {dragLeaveHandler}
               dropHandler = {dropHandler}
               onUpload = {onUpload}
-
               changeHandler={changeHandler}
             />
           </About>
@@ -96,9 +94,10 @@ function Editor() {
 
         <LargeColumn>
           <Navbar />
+          <EditorForm />
         </LargeColumn>
       </div>
-    </EditorContext.Provider>
+    </UploadingContext.Provider>
   )
 }
 

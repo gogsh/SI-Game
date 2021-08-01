@@ -1,0 +1,37 @@
+.HintIcon {
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+  margin-top: 5px;
+
+}
+
+
+//hint
+
+[data-tooltip] {
+  position: relative; 
+}
+[data-tooltip]::after {
+  width:500px;
+  content: attr(data-tooltip); 
+  position: absolute;
+  left: -100px;
+  top: 30px; 
+  background: #fbfcfe;
+  border: 1px solid #c8dcff;
+  font-size: 14px;
+  line-height: 140%;
+  text-align: center;
+  font-weight: bold;
+  color: #3a71cd;
+  padding: 8px; 
+  pointer-events: none;
+  opacity: 0; 
+  transition: 0.2s;
+  z-index: 2;
+}
+[data-tooltip]:hover::after {
+  opacity: 1; 
+  top: 40px; 
+}

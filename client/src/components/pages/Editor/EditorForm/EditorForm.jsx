@@ -7,8 +7,6 @@ import Textarea from '../../../UI/Textarea/Textarea'
 
 
 function EditorForm(props) {
- 
-
   return (
     <form className={classes.EditorForm}>
       {/* <SubHeader
@@ -22,12 +20,14 @@ function EditorForm(props) {
             hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
             data={props.state.name}
             changeHandler = {props.changeHandlers.name}
+            name = {'name'}
           />
           <Input
             lableText={'Логотип'}
             hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
             data={props.state.logo}
             changeHandler = {props.changeHandlers.logo}
+            name = {'logo'}
           />
           <Textarea
             lableText={'Описание'}

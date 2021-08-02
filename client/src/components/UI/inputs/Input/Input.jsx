@@ -3,6 +3,7 @@ import classes from './Input.module.scss'
 import HintIcon from '../../Icon/HintIcon'
 
 function Input(props) {
+  
   return (
     <div className={classes.Input}>
       <span>{props.lableText}</span>
@@ -13,7 +14,7 @@ function Input(props) {
           size={25}
           hint={props.hint}
         />
-        <input type="text" onChange={props.changeHandler} value={props.data} />
+        <input name = {props.name} type="text" onChange={props.changeHandler} value={props.data} />
       </div>
     </div>
   )

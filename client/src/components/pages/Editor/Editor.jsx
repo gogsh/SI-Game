@@ -19,30 +19,20 @@ import EditorForm from './EditorForm/EditorForm'
 
 function Editor() {
   const InitialData = {
-    info: {
-      author: null,
-      date: null,
-      difficulty: null,
-      logo: null,
-      name: null,
-      discription: null
-    },
-    rounds: []
+    author: null,
+    date: null,
+    difficulty: null,
+    logo: null,
+    name: null,
+    discription: null,
+    rounds: [],
   }
 
   const Auth = useContext(AuthContext)
   const { loading, request, error } = useUploading()
   const [selectedFile, setSelectedFile] = useState(false)
   const [formData, dispatch] = useReducer(reducer, InitialData)
-  const [state, setState] = useState({
-    name: '',
-    logo: '',
-    discription: '',
-    numberOfRounds: 1,
-    numberOfThemes: 1,
-    numberOfQuestions: 1,
-    difficulty: 0,
-  })
+
 
   const changeHandler = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -51,43 +41,44 @@ function Editor() {
   const changeHandlers = {
     name: (event) => {
       event.preventDefault()
-      setState({
+      dispatch({
+        type: 'CHANGE_NAME',
         name: event.target.value
       })
     },
     logo: (event) => {
       event.preventDefault()
-      setState({
+      dispatch({
+        type: 'CHANGE_LOGO',
         logo: event.target.value
       })
     }
   }
-  
+
 
   const onUploadData = (data) => {
-    let parsedData = JSON.parse(data)
-    dispatch({
-      type: 'UPLOADING_DATA',
-      payload: parsedData
-    })
-    setState({
-      name: parsedData.info.name,
-      logo: parsedData.info.logo || '',
+    const parsedData = JSON.parse(data)
+    const stateData = {
+      ...parsedData.info,
+      author: parsedData?.info?.author || Auth.nickname,
       numberOfRounds: parsedData.rounds.length - 1 || 1,
       numberOfThemes: parsedData.rounds[0].themes.length || 1,
       numberOfQuestions: parsedData.rounds[0].themes[0].questions.length || 1,
-      difficulty: Number(parsedData.info.difficulty) || 0,
+      difficulty: Number(parsedData.info.difficulty) || 0
+    }
+    
+    dispatch({
+      type: 'UPLOADING_DATA',
+      payload: stateData
     })
+
   }
 
 
   const onUpload = async () => {
     try {
       const formData = new FormData()
-      formData.append('file', selectedFile)
-      for (let value of formData.values()) {
-        console.log(value)
-      }
+      formData.append('file', selectedFile)     
       const data = await request('/api/upload/uploading', 'POST', formData)
       if (data) {
         onUploadData(data)
@@ -120,7 +111,7 @@ function Editor() {
         <LargeColumn>
           <Navbar />
           <EditorForm
-            state={state}
+            state={formData}
             changeHandlers={changeHandlers}
           />
         </LargeColumn>

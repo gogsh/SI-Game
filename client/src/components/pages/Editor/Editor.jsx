@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useReducer } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import { UploadingContext } from '../../../context/UploadingContext'
 import { useUploading } from '../../../hooks/uploading.hook'
-import reducer from '../../../reducer/editorReduser'
+import reducer from '../../../reducer/editorReducer'
 
 
 import classes from './Editor.module.scss'

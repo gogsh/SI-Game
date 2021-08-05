@@ -13,10 +13,11 @@ function Dropdown(props) {
         size={25}
         hint={props.hint}
       />
-      <select type="text" onChange={props.changeHandler} value={props.defaultValue}>
+      
+      <select type="text" name={props.name} onChange={props.changeHandler} value={props.defaultValue}>
         {
-          props.valuesArr.map(item => {            
-            return <option  key={item} value={item}>{item}</option>
+          props.valuesArr.map(item => {
+            return <option key={item} value={item}>{item}</option>
           })
         }
       </select>

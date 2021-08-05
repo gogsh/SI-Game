@@ -15,14 +15,42 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+
+    // Placeholder styles
+    ::-webkit-input-placeholder {
+      color: rgba(0, 0, 0, 0.20);
+      font-weight: normal;
+      opacity: 1; transition: opacity 0.3s ease;
+    }
+    ::-moz-placeholder {
+      color: rgba(0, 0, 0, 0.20);
+      font-weight: normal;
+      opacity: 1; transition: opacity 0.3s ease;
+    } 
+    :-moz-placeholder {
+      color: rgba(0, 0, 0, 0.20);
+      font-weight: normal;
+      opacity: 1; transition: opacity 0.3s ease;
+    } 
+    :-ms-input-placeholder {
+      color: rgba(0, 0, 0, 0.20);
+      font-weight: normal;
+      opacity: 1; transition: opacity 0.3s ease;
+    }
+    :focus::-webkit-input-placeholder {color: transparent; opacity: 0; transition: opacity 0.3s ease;}
+    :focus::-moz-placeholder          {color: transparent; opacity: 0; transition: opacity 0.3s ease;}
+    :focus:-moz-placeholder           {color: transparent; opacity: 0; transition: opacity 0.3s ease;}
+    :focus:-ms-input-placeholder      {color: transparent; opacity: 0; transition: opacity 0.3s ease;}
+
     > input {
-      font-size: 22px;
+      height: 35px;
+      font-size: 18px;
       padding: 6px 10px;
       margin-left: 16px;
       border: 1px solid #ececec;
       box-sizing: border-box;
       border-radius: 4px;
-      max-width: 390px;
+      min-width: 290px;
     }
   }
 }

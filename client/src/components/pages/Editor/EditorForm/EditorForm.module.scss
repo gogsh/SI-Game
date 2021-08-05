@@ -1,8 +1,7 @@
 .EditorForm {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
-  // align-items: center;
   width: 930px;
   border: 1px solid #ECECEC;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
@@ -15,7 +14,6 @@
   flex-direction: row;
   justify-content: space-between;
   margin: 28px 28px;
-  width: 100%;
 }
 
 .EditorForm_header_leftside {
@@ -33,3 +31,10 @@
   width: 343px;
   height: 200px;
 }
+
+.EditorForm_body {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+

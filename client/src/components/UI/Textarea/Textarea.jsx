@@ -12,7 +12,7 @@ function Textarea(props) {
         size={25}
         hint = {props.hint}
       />
-      <textarea name="" id="" rows="2" value={props.text || '' } ></textarea>
+      <textarea maxLength={props.maxLength} placeholder={props.placeholder} onChange={props.changeHandler} name={props.name} id="" rows="2" value={props.text || '' } ></textarea>
     </div>
   )
 }

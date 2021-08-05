@@ -5,6 +5,30 @@
   flex-flow: row;
   color: rgba(0, 0, 0, 0.67);
   width: 100%;
+  ::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.20);
+    font-weight: normal;
+    opacity: 1; transition: opacity 0.3s ease;
+  }
+  ::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.20);
+    font-weight: normal;
+    opacity: 1; transition: opacity 0.3s ease;
+  } 
+  :-moz-placeholder {
+    color: rgba(0, 0, 0, 0.20);
+    font-weight: normal;
+    opacity: 1; transition: opacity 0.3s ease;
+  } 
+  :-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.20);
+    font-weight: normal;
+    opacity: 1; transition: opacity 0.3s ease;
+  }
+  :focus::-webkit-input-placeholder {color: transparent; opacity: 0; transition: opacity 0.3s ease;}
+  :focus::-moz-placeholder          {color: transparent; opacity: 0; transition: opacity 0.3s ease;}
+  :focus:-moz-placeholder           {color: transparent; opacity: 0; transition: opacity 0.3s ease;}
+  :focus:-ms-input-placeholder      {color: transparent; opacity: 0; transition: opacity 0.3s ease;}
   > span {
     margin-right: 16px;
     font-size: 22px;
@@ -12,7 +36,8 @@
     width: 120px;
   }
   > textarea {
-    font-size: 22px;
+    font-size: 18px;
+
     padding: 6px 10px;
     margin-left: 16px;
     border: 1px solid #ececec;

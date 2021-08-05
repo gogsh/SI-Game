@@ -5,6 +5,7 @@
   flex-flow: row;
   color: rgba(0, 0, 0, 0.67);
   width: 100%;
+  
   > span {
     margin-right: 16px;
     font-size: 22px;
@@ -12,7 +13,8 @@
     width: 100%;
   }
   > select {
-    font-size: 22px;
+    font-size: 18px;
+    height: 35px;
     padding: 6px 10px;
     margin-left: 16px;
     border: 1px solid #ececec;

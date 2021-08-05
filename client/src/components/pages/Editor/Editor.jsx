@@ -19,12 +19,17 @@ import EditorForm from './EditorForm/EditorForm'
 
 function Editor() {
   const InitialData = {
-    author: null,
-    date: null,
-    difficulty: null,
-    logo: null,
-    name: null,
-    discription: null,
+    author: '',
+    date: '',
+    difficulty: '',
+    logo: '',
+    name: '',
+    discription: '',
+
+    numberOfRounds: 0,
+    numberOfThemes: 0,
+    numberOfQuestions: 0,
+
     rounds: [],
   }
 
@@ -33,26 +38,67 @@ function Editor() {
   const [selectedFile, setSelectedFile] = useState(false)
   const [formData, dispatch] = useReducer(reducer, InitialData)
 
+  console.log(formData)  
+
 
   const changeHandler = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
   const changeHandlers = {
-    name: (event) => {
+    onChangeDropdown: (event) => {
       event.preventDefault()
+      console.log(event.target.name, event.target.value)
       dispatch({
-        type: 'CHANGE_NAME',
-        name: event.target.value
+        type: 'ON_CHANGE',
+        name: event.target.name,
+        value: Number(event.target.value)
       })
     },
-    logo: (event) => {
+    onChangeInput: (event) => {
+      event.preventDefault()
+      console.log(event.target.name, event.target.value)
+      dispatch({
+        type: 'ON_CHANGE',
+        name: event.target.name,
+        value: event.target.value
+      })
+    },
+    onChangeRoundQuantity: (event) => {
       event.preventDefault()
       dispatch({
-        type: 'CHANGE_LOGO',
-        logo: event.target.value
+        type: 'ON_CHANGE_ROUND:QUANTITY',
+        name: event.target.name,
+        value: Number(event.target.value),
       })
-    }
+    },
+    onChangeThemeQuantity: (event) => {
+      event.preventDefault()
+      dispatch({
+        type: 'ON_CHANGE_THEME:QUANTITY',
+        name: event.target.name,
+        value: Number(event.target.value),
+      })
+    },
+    onChangeRoundName: (event) => {
+      event.preventDefault()
+      dispatch({
+        type: 'ON_CHANGE_ROUND:NAME',
+        name: event.target.name,
+        value: event.target.value,
+        roundIndex: Number(event.target.id.split('-')[0])
+      })
+    },
+    onChangeThemeName: (event) => {
+      event.preventDefault()
+      dispatch({
+        type: 'ON_CHANGE_THEME:NAME',
+        name: event.target.name,
+        value: event.target.value,
+        roundIndex: Number(event.target.id.split('-')[0]),
+        themeIndex: Number(event.target.id.split('-')[1])
+      })
+    },    
   }
 
 
@@ -64,9 +110,13 @@ function Editor() {
       numberOfRounds: parsedData.rounds.length - 1 || 1,
       numberOfThemes: parsedData.rounds[0].themes.length || 1,
       numberOfQuestions: parsedData.rounds[0].themes[0].questions.length || 1,
-      difficulty: Number(parsedData.info.difficulty) || 0
+      difficulty: Number(parsedData.info.difficulty) || 0,
+      discription: '',
+      rounds: [...parsedData.rounds],
+      finalRound: parsedData.rounds[parsedData.rounds.length - 1] || {}
     }
-    
+    // TODO: на стороне сервера привести в порядок данные
+    stateData.rounds.pop()
     dispatch({
       type: 'UPLOADING_DATA',
       payload: stateData
@@ -78,7 +128,7 @@ function Editor() {
   const onUpload = async () => {
     try {
       const formData = new FormData()
-      formData.append('file', selectedFile)     
+      formData.append('file', selectedFile)
       const data = await request('/api/upload/uploading', 'POST', formData)
       if (data) {
         onUploadData(data)

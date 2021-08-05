@@ -8,13 +8,15 @@ function Input(props) {
     <div className={classes.Input}>
       <span>{props.lableText}</span>
       <div className={classes.Input_rightSide}>
-        <HintIcon
+        {
+          props.hint ? <HintIcon
           name={'question'}
           color={'#ECECEC'}
           size={25}
           hint={props.hint}
-        />
-        <input name = {props.name} type="text" onChange={props.changeHandler} value={props.data} />
+        /> : <div></div>
+        }        
+        <input name = {props.name} type="text" onChange={props.changeHandler} value={props.data} placeholder={props.placeholder} />
       </div>
     </div>
   )

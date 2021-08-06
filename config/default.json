@@ -1,5 +1,0 @@
-{
-  "port" : 5000,
-  "jwtSecret": "gogshMern",
-  "mongoUri" : "mongodb+srv://gogsh:gogsh123@cluster0.gklhm.mongodb.net/MERNtest?retryWrites=true&w=majority"
-}

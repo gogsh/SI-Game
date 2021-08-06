@@ -18,18 +18,23 @@ function About(props) {
             {props.name}
           </h1>
           <span className={classes.About_container_body_discription}>Рекомендации:</span>
-          <span className={classes.About_container_body_text}>et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commod</span>
-          <span className={classes.About_container_body_text}>et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commod</span>
-          <span className={classes.About_container_body_text}>et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commod</span>
+          <span className={classes.About_container_body_text}>Ответом и вопросом может быть что угодно: картинка, видео, музыка. Правила ссылок на них будет указано ниже.</span>
+          <span className={classes.About_container_body_text}>После конвертации пака из оригинальной SiGame проверте корректность вопросов и ответов. Некоторые изображения могут попасть в вопрос, являясь при этом ответом на него.</span>
+          <span className={classes.About_container_body_text}>Как ссылкаться на контент в вопросе:</span>
+          <ul>
+            <li>Картинка: просто укажите ссылку на неё, скопировав URL</li>
+            <li>Видео: в разработке</li>
+            <li>Музыка: в разработке</li>
+          </ul>          
         </div>
+        </div>
+
+
+
+        {props.children}
       </div>
-
-
-
-      {props.children}
-    </div>
-  )
+      )
 }
 
-export default About
+      export default About
 

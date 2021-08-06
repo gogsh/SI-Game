@@ -32,9 +32,7 @@ function Chat({ nickname, avatarLink, messages, onAddMessage }) {
 
   const currentTime = () => {
     let date = new Date()
-    return (date.getMinutes().length < 2) 
-    ? date.getHours().toString() + ':' + '0' + date.getMinutes().toString() 
-    : date.getHours().toString() + ':' + date.getMinutes().toString()
+    return Intl.DateTimeFormat('ru', {hour: '2-digit', minute: '2-digit'}).format(date)
   }
 
 

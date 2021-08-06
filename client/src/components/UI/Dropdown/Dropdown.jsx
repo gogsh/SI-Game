@@ -10,7 +10,7 @@ function Dropdown(props) {
       <HintIcon
         name={'question'}
         color={'#ECECEC'}
-        size={25}
+        size={22}
         hint={props.hint}
       />
       

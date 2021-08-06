@@ -80,6 +80,14 @@ function Editor() {
         value: Number(event.target.value),
       })
     },
+    onChangeQuestionQuantity: (event) => {
+      event.preventDefault()
+      dispatch({
+        type: 'ON_CHANGE_QUESTION:QUANTITY',
+        name: event.target.name,
+        value: Number(event.target.value),
+      })
+    },
     onChangeRoundName: (event) => {
       event.preventDefault()
       dispatch({

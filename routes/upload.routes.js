@@ -29,7 +29,7 @@ function generateNormalData(json) {
       const final = round.themes.theme
 
       let fixedFinal = {}
-      if (Array.isArray(final)) { 
+      if (Array.isArray(final)) {
 
         const themesArr = final.map(theme => {
           return {
@@ -63,7 +63,9 @@ function generateNormalData(json) {
     const themesArr = round.themes.theme.map(theme => {
       const questions = theme.questions.question.map(question => {
         return {
-          questionContent: Array.isArray(question.scenario.atom) ? question.scenario.atom : question.scenario.atom._text,
+          questionContent: Array.isArray(question.scenario.atom)
+            ? question.scenario.atom.map(item => { if(item._text) return item._text }).filter(item => item !== undefined)
+            : question.scenario.atom._text,
           answer: question.right.answer,
           price: question._attributes.price
         }

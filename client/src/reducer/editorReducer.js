@@ -63,12 +63,36 @@ export default (state, action) => {
         ...state,
         [action.name]: action.value,
         rounds: [
-          ...rounds.map(round => {            
+          ...rounds.map(round => {
             return {
               ...round,
               themes: [
                 ...round.themes,
                 ...createThemes(action.value - round.themes.length, state.numberOfQuestions)
+              ]
+            }
+          })
+        ],
+      }
+    case 'ON_CHANGE_QUESTION:QUANTITY':
+      return {
+        ...state,
+        [action.name]: action.value,
+        rounds: [
+          ...rounds.map(round => {
+            return {
+              ...round,
+              themes: [
+                ...round.themes.map(theme => {     
+                  return {
+                    ...theme,
+                    questions: [
+                      ...theme.questions,
+                      ...createQuestions(action.value - theme.questions.length)
+                    ]
+                  }
+                })
+                
               ]
             }
           })
@@ -101,6 +125,7 @@ function createThemes(NoT, NoQ) {
 }
 
 function createQuestions(NoQ) {
+  if (NoQ <= 0) return []
   return new Array(NoQ).fill().map((e, i) => {
     return {
       questionContent: '',

@@ -9,7 +9,7 @@ function Textarea(props) {
        <HintIcon
         name={'question'}
         color={'#ECECEC'}
-        size={25}
+        size={22}
         hint = {props.hint}
       />
       <textarea maxLength={props.maxLength} placeholder={props.placeholder} onChange={props.changeHandler} name={props.name} id="" rows="2" value={props.text || '' } ></textarea>

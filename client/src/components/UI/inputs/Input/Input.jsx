@@ -12,7 +12,7 @@ function Input(props) {
           props.hint ? <HintIcon
           name={'question'}
           color={'#ECECEC'}
-          size={25}
+          size={22}
           hint={props.hint}
         /> : <div></div>
         }        

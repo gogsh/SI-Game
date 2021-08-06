@@ -62,7 +62,7 @@ function EditorForm(props) {
             hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
             valuesArr={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
             defaultValue={props.state.numberOfQuestions}
-            changeHandler={props.changeHandlers.onChangeDropdown}
+            changeHandler={props.changeHandlers.onChangeQuestionQuantity}
             name={'numberOfQuestions'}
           />
           <Dropdown
@@ -117,6 +117,7 @@ function EditorForm(props) {
                               themeIndex = {i}
                               onChangeQuestion = {props.changeHandlers.onChangeQuestion}
                               activeQuestion = {props.activeQuestion}
+                              numberOfQuestions={props.state.numberOfQuestions}
                               />
 
                           }

@@ -26,9 +26,11 @@ function Questions(props) {
 
   return (
     <div className={classes.Questions}>
-      {
-        renderQuestions(props.numberOfQuestions)        
-      }
+      <div className={classes.Questions_container}>
+        {
+          renderQuestions(props.numberOfQuestions)
+        }
+      </div>
       {
         activeIndex
           ? <QuestionForm

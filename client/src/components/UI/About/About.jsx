@@ -20,7 +20,7 @@ function About(props) {
           <span className={classes.About_container_body_discription}>Рекомендации:</span>
           <span className={classes.About_container_body_text}>Ответом и вопросом может быть что угодно: картинка, видео, музыка. Правила ссылок на них будет указано ниже.</span>
           <span className={classes.About_container_body_text}>После конвертации пака из оригинальной SiGame проверте корректность вопросов и ответов. Некоторые изображения могут попасть в вопрос, являясь при этом ответом на него.</span>
-          <span className={classes.About_container_body_text}>Как ссылкаться на контент в вопросе:</span>
+          <span className={classes.About_container_body_text}>Как ссылаться на контент в вопросе:</span>
           <ul>
             <li>Картинка: просто укажите ссылку на неё, скопировав URL</li>
             <li>Видео: в разработке</li>

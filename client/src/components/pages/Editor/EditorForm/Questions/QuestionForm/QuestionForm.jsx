@@ -1,24 +1,40 @@
 import React from 'react'
 import classes from './QuestionForm.module.scss'
-import Textarea from '../../../../../UI/Textarea/Textarea'
-import Dropdown from '../../../../../UI/Dropdown/Dropdown'
+import HintIcon from '../../../../../UI/Icon/HintIcon'
 
 function QuestionForm(props) {
   return (
     <div className={classes.QuestionForm}>
-      <div className={classes.QuestionForm_leftSide}>
-        <Dropdown 
-          valuesArr={['Текстовый', 'Только картинка', 'Видео', 'Музыкальный']}
-        />
-        <Textarea/>
+      <div className={classes.QuestionForm_header}>
+        <span>Заполните вопрос</span>
+        <strong>{props.question.price}</strong>       
       </div>
-      <div className={classes.QuestionForm_rigthSide}>
-        <Dropdown 
-          valuesArr={[null, 'Кот в мешке', 'Вопрос без риска', 'Аукцион']}
-        />
-        <Textarea/>
+      <div className={classes.QuestionForm_body}>
+        <div className={classes.QuestionForm_leftSide}>
+          <div className={classes.QuestionForm_lable}>
+            <span>Вопрос</span>
+            <HintIcon
+              name={'question'}
+              color={'#ECECEC'}
+              size={22}
+              hint={'12123'}
+            />
+          </div>
+          <textarea name="" id="" cols="30" rows="10"></textarea>
+        </div>
+        <div className={classes.QuestionForm_rigthSide}>
+          <div className={classes.QuestionForm_lable}>
+            <span>Ответ</span>
+            <HintIcon
+              name={'question'}
+              color={'#ECECEC'}
+              size={22}
+              hint={'12123'}
+            />
+          </div>
+          <textarea name="" id="" cols="30" rows="10"></textarea>
+        </div>
       </div>
-      {`Карточка ${props.question}`}
     </div>
   )
 }

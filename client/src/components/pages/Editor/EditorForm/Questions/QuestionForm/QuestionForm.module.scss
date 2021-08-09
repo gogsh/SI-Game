@@ -1,0 +1,69 @@
+.QuestionForm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-shadow: 0px 0px 20px rgba(58, 113, 205, 0.1);
+  border-radius: 4px;
+  border: 1px solid #3a71cd;
+}
+
+.QuestionForm_header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px 20px 0px 20px;
+  > span {
+    font-size: 22px;
+    line-height: 26px;
+    color: rgba(0, 0, 0, 0.2);
+  }
+  > strong {
+    font-size: 22px;
+    line-height: 26px;
+    color: rgba(0, 0, 0, 0.589);
+  }
+}
+
+.QuestionForm_body {
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+}
+
+.QuestionForm_leftSide {
+  display: flex;
+  flex-direction: column;
+  width: 390px;
+  margin-right: 20px;
+  > textarea {
+    font-size: 18px;
+    padding: 6px 10px;
+    border: 1px solid #ececec;
+    box-sizing: border-box;
+    border-radius: 4px;
+    width: 100%;
+    resize: none;
+  }
+}
+.QuestionForm_lable {
+  display: flex;
+  margin-bottom: 5px;
+  > span {
+    margin-right: 10px;
+  }
+}
+
+.QuestionForm_rigthSide {
+  display: flex;
+  flex-direction: column;
+  width: 418px;
+  > textarea {
+    font-size: 18px;
+    padding: 6px 10px;
+    border: 1px solid #ececec;
+    box-sizing: border-box;
+    border-radius: 4px;
+    width: 100%;
+    resize: none;
+  }
+}

@@ -38,7 +38,7 @@ function Editor() {
   const [selectedFile, setSelectedFile] = useState(false)
   const [formData, dispatch] = useReducer(reducer, InitialData)
 
-  console.log(formData)  
+  console.log(formData)
 
 
   const changeHandler = (event) => {
@@ -99,6 +99,7 @@ function Editor() {
     },
     onChangeThemeName: (event) => {
       event.preventDefault()
+      console.log(event.target.id)
       dispatch({
         type: 'ON_CHANGE_THEME:NAME',
         name: event.target.name,
@@ -106,7 +107,30 @@ function Editor() {
         roundIndex: Number(event.target.id.split('-')[0]),
         themeIndex: Number(event.target.id.split('-')[1])
       })
-    },    
+    },
+    onChangeQuestionContent: (event) => {
+      event.preventDefault()
+      dispatch({
+        type: 'ON_CHANGE_QUESTION:CONTENT',
+        name: event.target.name,
+        value: event.target.value,
+        roundIndex: Number(event.target.id.split('-')[0]),
+        themeIndex: Number(event.target.id.split('-')[1]),
+        questionIndex: Number(event.target.id.split('-')[2])
+      })
+    },
+    onChangeQuestionAnswer: (event) => {
+      console.log(event.target.name, event.target.id)
+      event.preventDefault()
+      dispatch({
+        type: 'ON_CHANGE_QUESTION:ANSWER',
+        name: event.target.name,
+        value: event.target.value,
+        roundIndex: Number(event.target.id.split('-')[0]),
+        themeIndex: Number(event.target.id.split('-')[1]),
+        questionIndex: Number(event.target.id.split('-')[2])
+      })
+    }
   }
 
 

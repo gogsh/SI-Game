@@ -4,7 +4,6 @@ import Question from './Question/Question'
 import QuestionForm from './QuestionForm/QuestionForm'
 
 function Questions(props) {
-  console.log(props.numberOfQuestions)
   const [activeIndex, setActiveIndex] = useState(null)
   const onChangeQuestion = event => {
     setActiveIndex(event.target.value)
@@ -34,6 +33,9 @@ function Questions(props) {
       {
         activeIndex
           ? <QuestionForm
+            questionHandler={props.onChangeQuestionContent}
+            answerHandler = {props.onChangeAnswerContent}
+            id = {`${props.id}-${activeIndex}-questionId-${props.questions[activeIndex].questionContent}`}            
             question={props.questions[activeIndex]}
           />
           : <div></div>

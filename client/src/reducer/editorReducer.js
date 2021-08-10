@@ -83,7 +83,7 @@ export default (state, action) => {
             return {
               ...round,
               themes: [
-                ...round.themes.map(theme => {     
+                ...round.themes.map(theme => {
                   return {
                     ...theme,
                     questions: [
@@ -92,11 +92,83 @@ export default (state, action) => {
                     ]
                   }
                 })
-                
+
               ]
             }
           })
         ],
+      }
+    case 'ON_CHANGE_QUESTION:CONTENT':
+      return {
+        ...state,
+        rounds: [
+          ...rounds.map((round, index) => {
+            if (action.roundIndex === index) {
+              return {
+                ...round,
+                themes: round.themes.map((theme, i) => {
+                  if (action.themeIndex === i) {
+                    return {
+                      ...theme,
+                      questions: theme.questions.map((question, j) => {
+                        if (action.questionIndex === j) {
+                          return {
+                            ...question,
+                            [action.name]: action.value
+                          }
+                        } else {
+                          return question
+                        }
+                      })
+                    }
+                  } else {
+                    return theme
+                  }
+                })
+              }
+            } else {
+              return round
+            }
+          })
+        ]
+      }
+    case 'ON_CHANGE_QUESTION:ANSWER':
+      return {
+        ...state,
+        rounds: [
+          ...rounds.map((round, index) => {
+            if (action.roundIndex === index) {
+              return {
+                ...round,
+                themes: round.themes.map((theme, i) => {
+                  if (action.themeIndex === i) {
+                    return {
+                      ...theme,
+                      questions: theme.questions.map((question, j) => {
+                        if (action.questionIndex === j) {
+                          return {
+                            ...question,
+                            answer: {
+                              ...question.answer,
+                              [action.name]: action.value
+                            }
+                            
+                          }
+                        } else {
+                          return question
+                        }
+                      })
+                    }
+                  } else {
+                    return theme
+                  }
+                })
+              }
+            } else {
+              return round
+            }
+          })
+        ]
       }
     default:
       return state

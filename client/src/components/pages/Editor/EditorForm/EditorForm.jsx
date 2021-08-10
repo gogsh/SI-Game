@@ -113,11 +113,14 @@ function EditorForm(props) {
                                 text={'Задайте кол-во вопросов'}
                               />
                               : <Questions
-                              questions = {theme.questions}
-                              themeIndex = {i}
-                              onChangeQuestion = {props.changeHandlers.onChangeQuestion}
-                              activeQuestion = {props.activeQuestion}
-                              numberOfQuestions={props.state.numberOfQuestions}
+                                questions={theme.questions}
+                                id={`${index}-${i}`}
+                                themeIndex={i}
+                                onChangeQuestion={props.changeHandlers.onChangeQuestion}
+                                activeQuestion={props.activeQuestion}
+                                numberOfQuestions={props.state.numberOfQuestions}
+                                onChangeQuestionContent={props.changeHandlers.onChangeQuestionContent}
+                                onChangeAnswerContent = {props.changeHandlers.onChangeQuestionAnswer}
                               />
 
                           }

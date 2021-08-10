@@ -20,7 +20,7 @@ function QuestionForm(props) {
               hint={'12123'}
             />
           </div>
-          <textarea name="" id="" cols="30" rows="10"></textarea>
+          <textarea id={props.id} onChange={props.questionHandler} value={props.question.questionContent || '' } name="questionContent" cols="30" rows="10" ></textarea>
         </div>
         <div className={classes.QuestionForm_rigthSide}>
           <div className={classes.QuestionForm_lable}>
@@ -32,7 +32,7 @@ function QuestionForm(props) {
               hint={'12123'}
             />
           </div>
-          <textarea name="" id="" cols="30" rows="10"></textarea>
+          <textarea id={props.id} onChange={props.answerHandler} value={props.question.answer._text || '' } name="_text" cols="30" rows="10"></textarea>
         </div>
       </div>
     </div>

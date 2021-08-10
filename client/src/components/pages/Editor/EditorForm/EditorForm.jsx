@@ -1,5 +1,6 @@
 import React from 'react'
 import classes from './EditorForm.module.scss'
+
 import Input from '../../../UI/inputs/Input/Input'
 import Dropdown from '../../../UI/Dropdown/Dropdown'
 import Textarea from '../../../UI/Textarea/Textarea'
@@ -7,6 +8,7 @@ import Hint from '../../../UI/Hint/Hint'
 import Round from './Round/Round'
 import Theme from './Theme/Theme'
 import Questions from './Questions/Questions'
+import Final from './Final/Final'
 
 
 function EditorForm(props) {
@@ -120,7 +122,7 @@ function EditorForm(props) {
                                 activeQuestion={props.activeQuestion}
                                 numberOfQuestions={props.state.numberOfQuestions}
                                 onChangeQuestionContent={props.changeHandlers.onChangeQuestionContent}
-                                onChangeAnswerContent = {props.changeHandlers.onChangeQuestionAnswer}
+                                onChangeAnswerContent={props.changeHandlers.onChangeQuestionAnswer}
                               />
 
                           }
@@ -131,9 +133,27 @@ function EditorForm(props) {
                   }
                 </Round>
               }
-            })} <div>FINAL</div> </>
+            })}
+                <Round
+                  inputName={'FinalName'}
+                  inputData={props.state.finalRound.FinalName || ''}
+                  changeHandler={props.changeHandlers.onChangeRoundName}
+                  inputPlaceholder={'Название раунда'}
+                  isFinal={true}
+                // finalData = {props.state.finalRound}
+                >
+                  
+                  <Final
+                    numberOfFinalThemes = {props.state.numberOfFinalThemes}
+                  />
+
+                </Round>
+            </>
         }
 
+      </div>
+      <div className={classes.EditorForm_footer}>
+        <button disabled={true}> Создать пак </button>
       </div>
     </form>
   )

@@ -29,8 +29,12 @@ function Editor() {
     numberOfRounds: 0,
     numberOfThemes: 0,
     numberOfQuestions: 0,
+    numberOfFinalThemes: 0,
 
     rounds: [],
+    finalRound: {
+      themes: []
+    }
   }
 
   const Auth = useContext(AuthContext)
@@ -145,8 +149,14 @@ function Editor() {
       difficulty: Number(parsedData.info.difficulty) || 0,
       discription: '',
       rounds: [...parsedData.rounds],
-      finalRound: parsedData.rounds[parsedData.rounds.length - 1] || {}
+      finalRound: !parsedData.rounds[parsedData.rounds.length - 1].themes
+        ? {
+          FinalName: parsedData.rounds[parsedData.rounds.length - 1].FinalName,
+          themes: [{ themeName: '', question: { ...parsedData.rounds[parsedData.rounds.length - 1].question } }]
+        }
+        : parsedData.rounds[parsedData.rounds.length - 1],      
     }
+    stateData.numberOfFinalThemes = stateData.finalRound.themes.length
     // TODO: на стороне сервера привести в порядок данные
     stateData.rounds.pop()
     dispatch({

@@ -3,10 +3,10 @@
   flex-direction: column;
   justify-content: flex-start;
   width: 930px;
-  border: 1px solid #ECECEC;
+  border: 1px solid #ececec;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
   border-radius: 6px;
-  margin-top: 10px;  
+  margin-top: 10px;
 }
 
 .EditorForm_header {
@@ -38,3 +38,33 @@
   justify-content: start;
 }
 
+.EditorForm_footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 110px;
+  width: 100%;
+  border-top: 1px solid #ececec;
+  border-radius: 0px 0px 6px 6px;
+  > button {
+    color: #ffff;
+    font-size: 22px;
+    font-weight: bold;
+    width: 320px;
+    height: 56px;
+    background: #3a71cd;
+    border-radius: 6px;
+    transition: background 0.3s ease;
+    &:hover {
+      background: #3268c5;
+      box-shadow: 0px 0px 10px rgba(58, 113, 205, 0.1);
+    }
+    &:disabled {
+      background: #ffffff;
+      font-weight: normal;
+      border: 1px solid #ECECEC;
+      color: rgba(189, 189, 189, 0.87);
+      // box-shadow: 0px 0px 10px rgba(58, 113, 205, 0.1);
+    }
+  }
+}

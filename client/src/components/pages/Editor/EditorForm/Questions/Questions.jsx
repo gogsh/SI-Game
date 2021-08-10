@@ -15,7 +15,7 @@ function Questions(props) {
       result.push(<Question
         activeIndex={activeIndex}
         key={index}
-        name={`Questions-${props.themeIndex}`}
+        name={`Questions-${props.themeIndex}-${props.id}`}
         value={index}
         changeHandler={onChangeQuestion}
       />)

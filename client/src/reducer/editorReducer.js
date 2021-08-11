@@ -152,7 +152,7 @@ export default (state, action) => {
                               ...question.answer,
                               [action.name]: action.value
                             }
-                            
+
                           }
                         } else {
                           return question
@@ -169,6 +169,53 @@ export default (state, action) => {
             }
           })
         ]
+      }
+    case 'ON_CHANGE_FINAL_QUESTION:CONTENT':
+      return {
+        ...state,
+        finalRound: {
+          ...state.finalRound,
+          themes: [
+            ...state.finalRound.themes.map((item, index) => {
+              if (index === action.themeIndex) {
+                return {
+                  ...item,
+                  question: {
+                    ...item.question,
+                    [action.name]: action.value
+                  }
+                }
+              } else {
+                return item
+              }
+            })
+          ]
+        }
+      }
+    case 'ON_CHANGE_FINAL_QUESTION:ANSWER':
+      return {
+        ...state,
+        finalRound: {
+          ...state.finalRound,
+          themes: [
+            ...state.finalRound.themes.map((item, index) => {
+              if (index === action.themeIndex) {
+                return {
+                  ...item,
+                  question: {
+                    ...item.question,
+                    answer: {
+                      ...item.question.answer,
+                      [action.name]: action.value
+                    }                    
+                  }
+                }
+              } else {
+                return item
+              }
+            })
+          ]
+        }
       }
     default:
       return state

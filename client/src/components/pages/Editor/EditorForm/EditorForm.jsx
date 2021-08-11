@@ -134,20 +134,20 @@ function EditorForm(props) {
                 </Round>
               }
             })}
-                <Round
-                  inputName={'FinalName'}
-                  inputData={props.state.finalRound.FinalName || ''}
-                  changeHandler={props.changeHandlers.onChangeRoundName}
-                  inputPlaceholder={'Название раунда'}
-                  isFinal={true}
-                // finalData = {props.state.finalRound}
-                >
-                  
-                  <Final
-                    numberOfFinalThemes = {props.state.numberOfFinalThemes}
-                  />
-
-                </Round>
+              <Round
+                inputName={'FinalName'}
+                inputData={props.state.finalRound.FinalName || ''}
+                changeHandler={props.changeHandlers.onChangeRoundName}
+                inputPlaceholder={'Название раунда'}
+                isFinal={true}
+              >
+                <Final
+                  numberOfFinalThemes={props.state.numberOfFinalThemes}
+                  finalData={props.state.finalRound}
+                  onChangeFinalQuestion={props.changeHandlers.onChangeFinalQuestion}
+                  onChangeFinalAnswer={props.changeHandlers.onChangeFinalAnswer}
+                />
+              </Round>
             </>
         }
 

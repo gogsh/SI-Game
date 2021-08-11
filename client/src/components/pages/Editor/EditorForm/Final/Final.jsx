@@ -3,7 +3,6 @@ import classes from './Final.module.scss'
 import Dropdown from '../../../../UI/Dropdown/Dropdown'
 
 function Final(props) {
-  console.log(props.finalData)
   return (
     <div className={classes.Final}>
       <div className={classes.Final_header}>
@@ -16,17 +15,20 @@ function Final(props) {
           name={'numberOfFinalRounds'}
         />
       </div>
-      <div className={classes.Final_body}>
-        <div className={classes.Final_body_header}>
-          <span>{1}</span>
-          <input type="text" placeholder={'Название темы'}/>
-        </div>
-        <div className={classes.Final_body_form}>
-          <textarea name="" id="" rows="5" placeholder={'Текст вопроса'}></textarea>
-          <textarea name="" id="" rows="5" placeholder={'Ответ'}></textarea>
-        </div>
-
-      </div>
+      {
+        props.finalData.themes.map((theme, index) => {          
+          return <div className={classes.Final_body}>
+            <div className={classes.Final_body_header}>
+              <span>{index + 1}</span>
+              <input type="text" placeholder={'Название темы'} name={'themeName'} />
+            </div>
+            <div className={classes.Final_body_form}>
+              <textarea name="questionContent" id={`${index}-questionContent`} rows="5" placeholder={'Текст вопроса'} value={theme.question.questionContent} onChange={props.onChangeFinalQuestion}></textarea>
+              <textarea name="_text" id={`${index}-answer`} rows="5" placeholder={'Ответ'} value={theme.question.answer._text} onChange={props.onChangeFinalAnswer}></textarea>
+            </div>
+          </div>
+        })
+      }
     </div>
   )
 }

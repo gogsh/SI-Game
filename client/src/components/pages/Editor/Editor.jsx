@@ -124,7 +124,6 @@ function Editor() {
       })
     },
     onChangeQuestionAnswer: (event) => {
-      console.log(event.target.name, event.target.id)
       event.preventDefault()
       dispatch({
         type: 'ON_CHANGE_QUESTION:ANSWER',
@@ -133,6 +132,24 @@ function Editor() {
         roundIndex: Number(event.target.id.split('-')[0]),
         themeIndex: Number(event.target.id.split('-')[1]),
         questionIndex: Number(event.target.id.split('-')[2])
+      })
+    },
+    onChangeFinalQuestion: (event) => {
+      event.preventDefault()
+      dispatch({
+        type: 'ON_CHANGE_FINAL_QUESTION:CONTENT',
+        name: event.target.name,
+        value: event.target.value,
+        themeIndex: Number(event.target.id[0])
+      })
+    },
+    onChangeFinalAnswer: (event) => {
+      event.preventDefault()
+      dispatch({
+        type: 'ON_CHANGE_FINAL_QUESTION:ANSWER',
+        name: event.target.name,
+        value: event.target.value,
+        themeIndex: Number(event.target.id[0])
       })
     }
   }
@@ -154,8 +171,26 @@ function Editor() {
           FinalName: parsedData.rounds[parsedData.rounds.length - 1].FinalName,
           themes: [{ themeName: '', question: { ...parsedData.rounds[parsedData.rounds.length - 1].question } }]
         }
-        : parsedData.rounds[parsedData.rounds.length - 1],      
+        : parsedData.rounds[parsedData.rounds.length - 1],
     }
+    stateData.finalRound.themes = stateData.finalRound.themes.map(item => {
+      if (Array.isArray(item.question.questionContent)) {
+        return {
+          ...item,
+          question: {
+            ...item.question,
+            questionContent: item.question.questionContent.reduce((acc, item) => {
+              return acc + item._text
+            }, '')
+          }
+        }
+      }
+      else {
+        return {
+          ...item
+        }
+      }
+    })
     stateData.numberOfFinalThemes = stateData.finalRound.themes.length
     // TODO: на стороне сервера привести в порядок данные
     stateData.rounds.pop()

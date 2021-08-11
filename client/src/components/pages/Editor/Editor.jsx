@@ -151,6 +151,14 @@ function Editor() {
         value: event.target.value,
         themeIndex: Number(event.target.id[0])
       })
+    },
+    onChangeFinalThemeQuantity: (event) => {
+      event.preventDefault()
+      dispatch({
+        type: 'ON_CHANGE_FINAL_THEME:QUANTITY',
+        value: event.target.value,
+        name: event.target.name
+      })
     }
   }
 
@@ -215,6 +223,18 @@ function Editor() {
     }
   }
 
+  const onSave = async (e) => {
+    e.preventDefault()
+    try {
+      const data = await request('/api/upload/save', 'PUT', formData)
+      if (data) {
+        console.log(data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <UploadingContext.Provider value={[]}>
       <div className={classes.Editor}>
@@ -240,6 +260,7 @@ function Editor() {
           <EditorForm
             state={formData}
             changeHandlers={changeHandlers}
+            onSave = {onSave}
           />
         </LargeColumn>
       </div>

@@ -207,7 +207,7 @@ export default (state, action) => {
                     answer: {
                       ...item.question.answer,
                       [action.name]: action.value
-                    }                    
+                    }
                   }
                 }
               } else {
@@ -215,6 +215,20 @@ export default (state, action) => {
               }
             })
           ]
+        }
+      }
+    case 'ON_CHANGE_FINAL_THEME:QUANTITY':
+      console.log(state.finalRound.themes.length)
+      return {
+        ...state,
+        [action.name]: action.value,
+        finalRound: {
+          ...state.finalRound,
+          themes: [
+            ...state.finalRound.themes,
+            ...createFinalThemes(action.value - state.finalRound.themes.length)
+          ]
+
         }
       }
     default:
@@ -251,6 +265,22 @@ function createQuestions(NoQ) {
       price: (i + 1) * 100,
       answer: {
         text: ''
+      }
+    }
+  })
+}
+
+function createFinalThemes(NoT) {
+  if (NoT <= 0) return []
+  return new Array(NoT).fill().map((e, i) => {
+    return {
+      themeName: '',
+      question: {
+        questionContent: '',
+        price: (i + 1) * 100,
+        answer: {
+          text: ''
+        }
       }
     }
   })

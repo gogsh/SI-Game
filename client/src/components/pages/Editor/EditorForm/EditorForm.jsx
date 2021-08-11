@@ -146,6 +146,7 @@ function EditorForm(props) {
                   finalData={props.state.finalRound}
                   onChangeFinalQuestion={props.changeHandlers.onChangeFinalQuestion}
                   onChangeFinalAnswer={props.changeHandlers.onChangeFinalAnswer}
+                  onChangeFinalThemeQuantity={props.changeHandlers.onChangeFinalThemeQuantity}
                 />
               </Round>
             </>
@@ -153,7 +154,14 @@ function EditorForm(props) {
 
       </div>
       <div className={classes.EditorForm_footer}>
-        <button disabled={true}> Создать пак </button>
+        <button disabled={
+          props.state.numberOfRounds == 0
+          || props.state.numberOfThemes == 0
+          || props.state.numberOfQuestions == 0
+          || props.state.numberOfFinalThemes == 0
+        }
+        onClick={props.onSave}
+        > Создать пак </button>
       </div>
     </form>
   )

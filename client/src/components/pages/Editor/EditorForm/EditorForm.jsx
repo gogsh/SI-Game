@@ -26,7 +26,7 @@ function EditorForm(props) {
           />
           <Input
             lableText={'Логотип'}
-            hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
+            hint={'Скопируйте и вставте ссылку на логотип. Логотип пака будет отображаться в начале игры.'}
             data={props.state.logo}
             changeHandler={props.changeHandlers.onChangeInput}
             name={'logo'}
@@ -34,7 +34,7 @@ function EditorForm(props) {
           />
           <Textarea
             lableText={'Описание'}
-            hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
+            hint={'Кратко опишите о чем пак. Описание будет отображаться в начале игры и при входе в лобби'}
             text={props.state.discription}
             changeHandler={props.changeHandlers.onChangeInput}
             name={'discription'}
@@ -45,7 +45,7 @@ function EditorForm(props) {
         <div className={classes.EditorForm_header_rightside}>
           <Dropdown
             lableText={'Кол-во раундов'}
-            hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
+            hint={'Должно быть не меньше одного раунда. Финал считается отдельно и создается автоматически внизу формы'}
             valuesArr={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
             defaultValue={props.state.numberOfRounds}
             changeHandler={props.changeHandlers.onChangeRoundQuantity}
@@ -53,7 +53,7 @@ function EditorForm(props) {
           />
           <Dropdown
             lableText={'Тем в раунде'}
-            hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
+            hint={'Должно быть не меньше одной темы.'}
             valuesArr={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
             defaultValue={props.state.numberOfThemes}
             changeHandler={props.changeHandlers.onChangeThemeQuantity}
@@ -61,7 +61,7 @@ function EditorForm(props) {
           />
           <Dropdown
             lableText={'Вопросов на тему'}
-            hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
+            hint={'Должно быть не меньше одного вопроса'}
             valuesArr={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
             defaultValue={props.state.numberOfQuestions}
             changeHandler={props.changeHandlers.onChangeQuestionQuantity}
@@ -69,7 +69,7 @@ function EditorForm(props) {
           />
           <Dropdown
             lableText={'Сложность'}
-            hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
+            hint={'Постарайтесь оценить сложность вашего пака по десятибальной шкале. Будет отображаться при входе в лобби и в начале игры'}
             valuesArr={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
             defaultValue={props.state.difficulty}
             changeHandler={props.changeHandlers.onChangeDropdown}

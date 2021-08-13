@@ -3,35 +3,34 @@
   height: fit-content;
   cursor: pointer;
   margin-top: 5px;
-
 }
-
 
 //hint
 
 [data-tooltip] {
-  position: relative; 
+  position: relative;
 }
 [data-tooltip]::after {
-  width:500px;
-  content: attr(data-tooltip); 
+  min-width: 500px;
+  content: attr(data-tooltip);
   position: absolute;
-  left: -100px;
-  top: 30px; 
-  background: #fbfcfe;
-  border: 1px solid #c8dcff;
-  font-size: 14px;
+  left: -250px;
+  top: 30px;
+  background: #ffffff;
+  border: 1px solid #ececec;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.061);
+  border-radius: 4px;
+  font-size: 16px;
   line-height: 140%;
   text-align: center;
-  font-weight: bold;
-  color: #3a71cd;
-  padding: 8px; 
+  color: rgba(0, 0, 0, 0.67);
+  padding: 14px;
   pointer-events: none;
-  opacity: 0; 
+  opacity: 0;
   transition: 0.2s;
   z-index: 2;
 }
 [data-tooltip]:hover::after {
-  opacity: 1; 
-  top: 40px; 
+  opacity: 1;
+  top: 40px;
 }

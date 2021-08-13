@@ -8,7 +8,7 @@ function Final(props) {
       <div className={classes.Final_header}>
         <Dropdown
           lableText={'Тем в финале'}
-          hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
+          hint={'Минимум одна тема в финале. На каждую тему всего один вопрос.'}
           valuesArr={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
           defaultValue={props.numberOfFinalThemes}
           changeHandler={props.onChangeFinalThemeQuantity}

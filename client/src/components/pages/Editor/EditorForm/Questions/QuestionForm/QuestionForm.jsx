@@ -17,7 +17,7 @@ function QuestionForm(props) {
               name={'question'}
               color={'#ECECEC'}
               size={22}
-              hint={'12123'}
+              hint={'Напишите вопрос, если хотите задать его в текстовом формате, или оставте ссылку на картинку'}
             />
           </div>
           <textarea id={props.id} onChange={props.questionHandler} value={props.question.questionContent || '' } name="questionContent" cols="30" rows="10" ></textarea>
@@ -29,7 +29,7 @@ function QuestionForm(props) {
               name={'question'}
               color={'#ECECEC'}
               size={22}
-              hint={'12123'}
+              hint={'Напишите ответ на вопрос в текстовом формате'}
             />
           </div>
           <textarea id={props.id} onChange={props.answerHandler} value={props.question.answer._text || '' } name="_text" cols="30" rows="10"></textarea>

@@ -18,7 +18,7 @@ function Final(props) {
       {
         props.finalData.themes.map((theme, index) => {
           if (index < props.numberOfFinalThemes) {
-            return <div className={classes.Final_body}>
+            return <div className={classes.Final_body} key={index}>
               <div className={classes.Final_body_header}>
                 <span>{index + 1}</span>
                 <input type="text" placeholder={'Название темы'} name={'themeName'} />

@@ -64,7 +64,7 @@ function generateNormalData(json) {
       const questions = theme.questions.question.map(question => {
         return {
           questionContent: Array.isArray(question.scenario.atom)
-            ? question.scenario.atom.map(item => { if(item._text) return item._text }).filter(item => item !== undefined)
+            ? question.scenario.atom.map(item => { if (item._text) return item._text }).filter(item => item !== undefined)
             : question.scenario.atom._text,
           answer: question.right.answer,
           price: question._attributes.price
@@ -134,22 +134,37 @@ router.post(
           })
         })
       })
-      // const pack = new Pack({
-      //   info: {
-      //     author: 'Иван',
-      //     date: '12.32.2017',
-      //     difficulty: 5,
-      //     logo: '//LInk.jpg',
-      //     name: 'SuperPack'
-      //   },
-      //   rounds: [
-      //     [123], [123]
-      //   ]
-      // })
-      // pack.save()
-
     } catch (e) {
       res.status(500).json({ message: 'Something goes wrong, try again' })
+    }
+  }
+)
+
+router.post(
+  '/save',
+  async (req, res) => {
+    try {
+      const name = req.body.name
+      const pack = new Pack({
+        author: req.body.author,
+        date: req.body.date,
+        difficulty: req.body.difficulty,
+        logo: req.body.logo,
+        name: req.body.name,
+        discription: req.body.discription,
+        rounds: req.body.rounds,
+        finalRound: req.body.finalRound,
+      })
+      const isCreated = await Pack.findOne({ name })
+      if (isCreated) {
+        return res.status(400).json({ message: 'Пак с таким именем уже загружен' })
+      } else {
+        await pack.save()
+        res.status(201).json({ message: 'Файл успешно сохранён' })
+      }
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ message: 'Сохранить файл не удалось' })
     }
   }
 )

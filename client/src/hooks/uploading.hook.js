@@ -1,13 +1,12 @@
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback } from "react"
 
 export const useUploading = () => {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [uploadLoading, setLoading] = useState(false)
+  const [uploadError, setError] = useState(null)
 
-  const request = useCallback(async (url, method = 'GET', body = null, headers = undefined) => {
+  const uploadRequest = useCallback(async (url, method = 'GET', body = null, headers = undefined) => {
     setLoading(true)
-    try {   
-
+    try {
       const response = await fetch(url, { method, body, headers })
       const data = await response.json()
       if (!response.ok) {
@@ -15,7 +14,6 @@ export const useUploading = () => {
       }
       setLoading(false)
       return data
-
     } catch (e) {
       setLoading(false)
       setError(e.message)
@@ -25,6 +23,5 @@ export const useUploading = () => {
 
   const clearError = () => setError(null)
 
-  return { loading, request, error, clearError }
+  return { uploadLoading, uploadRequest, uploadError, clearError }
 }
- 

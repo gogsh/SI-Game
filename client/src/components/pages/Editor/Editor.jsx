@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState, useReducer } from 'react'
+import React, { useContext, useState, useReducer } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import { UploadingContext } from '../../../context/UploadingContext'
 import { useUploading } from '../../../hooks/uploading.hook'
+import { useHttp } from '../../../hooks/http.hook'
 import reducer from '../../../reducer/editorReducer'
-
 
 import classes from './Editor.module.scss'
 
@@ -14,6 +14,9 @@ import Navbar from '../../UI/Navbar/Navbar'
 import About from '../../UI/About/About'
 import Upload from '../../UI/Upload/Upload'
 import EditorForm from './EditorForm/EditorForm'
+
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 
 
@@ -38,7 +41,8 @@ function Editor() {
   }
 
   const Auth = useContext(AuthContext)
-  const { loading, request, error } = useUploading()
+  const { loading, request, error } = useHttp()
+  const { uploadLoading, uploadRequest, uploadError } = useUploading()
   const [selectedFile, setSelectedFile] = useState(false)
   const [formData, dispatch] = useReducer(reducer, InitialData)
 
@@ -214,7 +218,7 @@ function Editor() {
     try {
       const formData = new FormData()
       formData.append('file', selectedFile)
-      const data = await request('/api/upload/uploading', 'POST', formData)
+      const data = await uploadRequest('/api/upload/uploading', 'POST', formData)
       if (data) {
         onUploadData(data)
       }
@@ -226,18 +230,23 @@ function Editor() {
   const onSave = async (e) => {
     e.preventDefault()
     try {
-      const data = await request('/api/upload/save', 'PUT', formData)
+      const data = await request('/api/upload/save', 'POST', formData)
       if (data) {
-        console.log(data)
+        dispatch({
+          type: 'UPLOADING_DATA',
+          payload: InitialData
+        })
+        toast(data.message)
       }
     } catch (error) {
-      console.log(error)
+      toast.error(error.message)
     }
   }
 
   return (
     <UploadingContext.Provider value={[]}>
       <div className={classes.Editor}>
+        <ToastContainer/>
         <SmallColumn>
           <SmallProfile
             userName={Auth.nickname}
@@ -260,7 +269,7 @@ function Editor() {
           <EditorForm
             state={formData}
             changeHandlers={changeHandlers}
-            onSave = {onSave}
+            onSave={onSave}
           />
         </LargeColumn>
       </div>

@@ -62,7 +62,7 @@ function EditorForm(props) {
           <Dropdown
             lableText={'Вопросов на тему'}
             hint={'Будет отбражаться в библиотеке паков и в названии комнаты'}
-            valuesArr={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+            valuesArr={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
             defaultValue={props.state.numberOfQuestions}
             changeHandler={props.changeHandlers.onChangeQuestionQuantity}
             name={'numberOfQuestions'}

@@ -88,7 +88,7 @@ export default (state, action) => {
                     ...theme,
                     questions: [
                       ...theme.questions,
-                      ...createQuestions(action.value - theme.questions.length)
+                      ...createQuestions(action.value - theme.questions.length, theme.questions.length)
                     ]
                   }
                 })
@@ -257,16 +257,17 @@ function createThemes(NoT, NoQ) {
   })
 }
 
-function createQuestions(NoQ) {
+function createQuestions(NoQ, currentLength) {
   if (NoQ <= 0) return []
   return new Array(NoQ).fill().map((e, i) => {
+    currentLength++
     return {
       questionContent: '',
-      price: (i + 1) * 100,
+      price: currentLength ? currentLength * 100 : (i + 1) * 100,
       answer: {
         text: ''
       }
-    }
+    }    
   })
 }
 

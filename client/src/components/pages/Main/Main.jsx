@@ -18,13 +18,13 @@ import reducer from '../../../reducer/messageReducer'
 
 
 function Main() {
-  const Auth = useContext(AuthContext) 
+  const Auth = useContext(AuthContext)
   const [messages, dispatch] = useReducer(reducer, [])
-  
-  
+
+
 
   const addMessage = (message) => {
-    console.log('from back',message)
+    console.log('from back', message)
     dispatch({
       type: 'NEW_MESSAGE',
       payload: message
@@ -32,7 +32,7 @@ function Main() {
   }
 
   useEffect(() => {
-    chatSocket.on('CHAT:NEW_MESSAGE', addMessage)    
+    chatSocket.on('CHAT:NEW_MESSAGE', addMessage)
   }, [])
 
   function createGameHandler() {
@@ -45,18 +45,17 @@ function Main() {
       <SmallColumn>
         <SmallProfile
           userName={Auth.nickname}
-          avatar = {Auth.avatarLink}
+          avatar={Auth.avatarLink}
         />
-        <PrimaryButton
-          text={'Создать игру'}
-          onClick={createGameHandler}
-        />
-        <ActiveRooms
-          rooms={[]}
-          headerAlign={'right'}
-          header={'Список игр'}
-        />
-
+          <PrimaryButton
+            text={'Создать игру'}
+            onClick={createGameHandler}
+          />
+          <ActiveRooms
+            rooms={[]}
+            headerAlign={'right'}
+            header={'Список игр'}
+          />
       </SmallColumn>
 
       <LargeColumn>
@@ -66,9 +65,9 @@ function Main() {
           linkTo={'/editor'}
         />
         <Chat
-        {...Auth}
-        messages = {messages}
-        onAddMessage = {addMessage}
+          {...Auth}
+          messages={messages}
+          onAddMessage={addMessage}
         />
       </LargeColumn>
     </div>

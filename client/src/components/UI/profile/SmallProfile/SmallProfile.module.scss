@@ -1,5 +1,7 @@
 .SmallProfile {
   display: flex;
+  position: sticky;
+  top: 40px;
   flex-direction: row;
   align-items: center;
   width: 646px;

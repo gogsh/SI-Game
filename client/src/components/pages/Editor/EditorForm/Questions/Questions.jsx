@@ -5,8 +5,13 @@ import QuestionForm from './QuestionForm/QuestionForm'
 
 function Questions(props) {
   const [activeIndex, setActiveIndex] = useState(null)
-  const onChangeQuestion = event => {
-    setActiveIndex(event.target.value)
+  const onChangeQuestion = event => {  
+    if(event.target.value === activeIndex) {
+      setActiveIndex(null)
+      event.target.checked = false
+    } else {
+      setActiveIndex(event.target.value)
+    }    
   }
 
   const renderQuestions = (NoQ) => {

@@ -1,5 +1,7 @@
 .About {
-  display: flex;
+  display: flex;  
+  position: sticky;
+  top: 140px;
   flex-direction: column;
   border: 1px solid #ececec;
   box-sizing: border-box;

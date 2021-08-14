@@ -1,9 +1,9 @@
 import React, { useContext, useState, useReducer } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
-import { UploadingContext } from '../../../context/UploadingContext'
 import { useUploading } from '../../../hooks/uploading.hook'
 import { useHttp } from '../../../hooks/http.hook'
 import reducer from '../../../reducer/editorReducer'
+import { createFinalThemes } from '../../../DataCreators/Pack'
 
 import classes from './Editor.module.scss'
 
@@ -17,8 +17,6 @@ import EditorForm from './EditorForm/EditorForm'
 
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
-
 
 function Editor() {
   const InitialData = {
@@ -166,51 +164,60 @@ function Editor() {
     }
   }
 
-
   const onUploadData = (data) => {
     const parsedData = JSON.parse(data)
     const stateData = {
       ...parsedData.info,
       author: parsedData?.info?.author || Auth.nickname,
-      numberOfRounds: parsedData.rounds.length - 1 || 1,
+      numberOfRounds: parsedData.rounds.length || 1,
       numberOfThemes: parsedData.rounds[0].themes.length || 1,
       numberOfQuestions: parsedData.rounds[0].themes[0].questions.length || 1,
       difficulty: Number(parsedData.info.difficulty) || 0,
       discription: '',
       rounds: [...parsedData.rounds],
-      finalRound: !parsedData.rounds[parsedData.rounds.length - 1].themes
-        ? {
-          FinalName: parsedData.rounds[parsedData.rounds.length - 1].FinalName,
-          themes: [{ themeName: '', question: { ...parsedData.rounds[parsedData.rounds.length - 1].question } }]
-        }
-        : parsedData.rounds[parsedData.rounds.length - 1],
+      finalRound: {
+        FinalName: '',
+        themes: [
+          ...createFinalThemes(1)
+        ]
+      }
     }
-    stateData.finalRound.themes = stateData.finalRound.themes.map(item => {
-      if (Array.isArray(item.question.questionContent)) {
-        return {
-          ...item,
-          question: {
-            ...item.question,
-            questionContent: item.question.questionContent.reduce((acc, item) => {
-              return acc + item._text
-            }, '')
+
+    if (parsedData.finalRound) {
+      console.log('финал есть')
+      stateData.finalRound.themes = parsedData.finalRound.themes ? parsedData.finalRound.themes.map(item => {
+        if (Array.isArray(item?.question?.questionContent)) {
+          return {
+            ...item,
+            question: {
+              ...item.question,
+              questionContent: item.question.questionContent.reduce((acc, item) => {
+                return acc + item._text
+              }, '')
+            }
           }
         }
-      }
-      else {
-        return {
-          ...item
+        else {
+          return {
+            ...item
+          }
         }
-      }
-    })
-    stateData.numberOfFinalThemes = stateData.finalRound.themes.length
-    // TODO: на стороне сервера привести в порядок данные
-    stateData.rounds.pop()
+      }) : [{
+        themeName: '',
+        question: {
+          questionContent: parsedData.finalRound.question.questionContent,
+          price: parsedData.finalRound.question.price,
+          answer: {
+            text: parsedData.finalRound.question.answer._text
+          }
+        }
+      }]
+      stateData.numberOfFinalThemes = stateData.finalRound.themes.length
+    }
     dispatch({
       type: 'UPLOADING_DATA',
       payload: stateData
     })
-
   }
 
 
@@ -244,9 +251,8 @@ function Editor() {
   }
 
   return (
-    <UploadingContext.Provider value={[]}>
       <div className={classes.Editor}>
-        <ToastContainer/>
+        <ToastContainer />
         <SmallColumn>
           <SmallProfile
             userName={Auth.nickname}
@@ -273,7 +279,6 @@ function Editor() {
           />
         </LargeColumn>
       </div>
-    </UploadingContext.Provider>
   )
 }
 

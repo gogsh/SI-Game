@@ -22,12 +22,13 @@ function generateNormalData(json) {
     date: data._attributes.date,
     difficulty: data._attributes.difficulty,
     logo: data._attributes.logo,
-    name: data._attributes.name
+    name: data._attributes.name,
+    finalRound: null
   }
   data.rounds.round.forEach((round, index, arr) => {
-    if (index === data.rounds.round.length - 1) {
-      const final = round.themes.theme
 
+    if (round._attributes.type === 'final') {
+      const final = round.themes.theme
       let fixedFinal = {}
       if (Array.isArray(final)) {
 
@@ -55,8 +56,7 @@ function generateNormalData(json) {
           },
         }
       }
-
-      normalData.rounds.push(fixedFinal)
+      normalData.finalRound = {...fixedFinal}
       return
     }
 

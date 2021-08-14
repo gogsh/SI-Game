@@ -1,3 +1,5 @@
+import {createRounds, createThemes, createQuestions, createFinalThemes} from '../DataCreators/Pack'
+
 export default (state, action) => {
   let rounds = state.rounds
   switch (action.type) {
@@ -218,7 +220,6 @@ export default (state, action) => {
         }
       }
     case 'ON_CHANGE_FINAL_THEME:QUANTITY':
-      console.log(state.finalRound.themes.length)
       return {
         ...state,
         [action.name]: action.value,
@@ -234,55 +235,4 @@ export default (state, action) => {
     default:
       return state
   }
-}
-
-
-function createRounds(NoR, NoT, NoQ) {
-  if (NoR <= 0) return []
-  return new Array(NoR).fill().map(() => {
-    return {
-      RoundName: '',
-      themes: createThemes(NoT, NoQ)
-    }
-  })
-}
-
-function createThemes(NoT, NoQ) {
-  if (NoT <= 0) return []
-  return new Array(NoT).fill().map(() => {
-    return {
-      themeName: '',
-      questions: createQuestions(NoQ)
-    }
-  })
-}
-
-function createQuestions(NoQ, currentLength) {
-  if (NoQ <= 0) return []
-  return new Array(NoQ).fill().map((e, i) => {
-    currentLength++
-    return {
-      questionContent: '',
-      price: currentLength ? currentLength * 100 : (i + 1) * 100,
-      answer: {
-        text: ''
-      }
-    }    
-  })
-}
-
-function createFinalThemes(NoT) {
-  if (NoT <= 0) return []
-  return new Array(NoT).fill().map((e, i) => {
-    return {
-      themeName: '',
-      question: {
-        questionContent: '',
-        price: (i + 1) * 100,
-        answer: {
-          text: ''
-        }
-      }
-    }
-  })
 }

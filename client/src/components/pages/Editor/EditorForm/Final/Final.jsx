@@ -24,8 +24,8 @@ function Final(props) {
                 <input type="text" placeholder={'Название темы'} name={'themeName'} />
               </div>
               <div className={classes.Final_body_form}>
-                <textarea name="questionContent" id={`${index}-questionContent`} rows="5" placeholder={'Текст вопроса'} value={theme.question.questionContent} onChange={props.onChangeFinalQuestion}></textarea>
-                <textarea name="_text" id={`${index}-answer`} rows="5" placeholder={'Ответ'} value={theme.question.answer._text} onChange={props.onChangeFinalAnswer}></textarea>
+                <textarea name="questionContent" id={`${index}-questionContent`} rows="5" placeholder={'Текст вопроса'} value={theme?.question?.questionContent || ''} onChange={props.onChangeFinalQuestion}></textarea>
+                <textarea name="_text" id={`${index}-answer`} rows="5" placeholder={'Ответ'} value={theme?.question?.answer?._text || ''} onChange={props.onChangeFinalAnswer}></textarea>
               </div>
             </div>
           }

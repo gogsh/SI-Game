@@ -1,0 +1,33 @@
+.Modal__container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(24, 45, 81, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.4s;
+}
+.Modal__container.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.Modal {
+  padding: 28px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+  transform: scale(0.75);
+  transition: 0.4s all;
+}
+
+.Modal.active {
+  transform: scale(1);
+}
+
+

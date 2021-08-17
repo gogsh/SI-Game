@@ -1,10 +1,10 @@
 import React from 'react'
-import classes from './ImputLarge.module.scss'
+import classes from './InputLarge.module.scss'
 
-function ImputLarge(props) {
+function InputLarge(props) {
   return (
     <input
-      className={classes.ImputLarge}
+      className={classes.InputLarge}
       placeholder={props.placeholder}
       type={props.type}
       name={props.name}
@@ -14,4 +14,4 @@ function ImputLarge(props) {
   )
 }
 
-export default ImputLarge
+export default InputLarge

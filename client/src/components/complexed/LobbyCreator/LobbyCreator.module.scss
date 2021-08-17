@@ -1,0 +1,95 @@
+.LobbyCreator {
+  display: flex;
+  flex-direction: column;
+  width: 840px;
+  .LobbyCreator__header {
+    display: flex;
+    flex-direction: column;
+    > h1 {
+      font-size: 32px;
+      line-height: 38px;
+      color: rgba(0, 0, 0, 0.87);
+    }
+    .LobbyCreator__header__container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 23px;
+      margin-bottom: 34px;
+      .LobbyCreator__header__leftSide {
+        display: flex;
+        flex-direction: column;
+        height: 94px;
+        justify-content: space-between;
+      }
+      .LobbyCreator__header__rigthSide {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+  > span {
+    font-size: 22px;
+    line-height: 26px;
+    color: rgba(0, 0, 0, 0.67);
+  }
+  .LobbyCreator__table {
+    display: flex;
+    width: 100%;
+    max-height: 500px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex-direction: column;
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.14);
+      border-radius: 2px;
+    }
+  }
+  .LobbyCreator__overview {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+    .LobbyCreator__info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      width: 370px;
+      > span {
+        font-weight: bold;
+        font-size: 36px;
+        line-height: 43px;
+        color: #f1f1f1;
+      }
+      .LobbyCreator__button_createPack {
+        color: #ffff;
+        font-size: 22px;
+        font-weight: bold;
+        width: 100%;
+        height: 56px;
+        background: #3a71cd;
+        border-radius: 6px;
+        transition: background 0.3s ease;
+        &:hover {
+          background: #3268c5;
+          box-shadow: 0px 0px 10px rgba(58, 113, 205, 0.1);
+        }
+      }
+      .LobbyCreator__button_chooseOther {
+        font-size: 22px;
+        line-height: 26px;
+        text-align: center;
+        color: #3a71cd;
+        background: none;
+        margin-top: 26px;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

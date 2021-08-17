@@ -56,7 +56,7 @@ function generateNormalData(json) {
           },
         }
       }
-      normalData.finalRound = {...fixedFinal}
+      normalData.finalRound = { ...fixedFinal }
       return
     }
 
@@ -154,6 +154,10 @@ router.post(
         discription: req.body.discription,
         rounds: req.body.rounds,
         finalRound: req.body.finalRound,
+        numberOfRounds: req.body.numberOfRounds,
+        numberOfThemes: req.body.numberOfThemes,
+        numberOfQuestions: req.body.numberOfQuestions,
+        numberOfFinalThemes: req.body.numberOfFinalThemes
       })
       const isCreated = await Pack.findOne({ name })
       if (isCreated) {

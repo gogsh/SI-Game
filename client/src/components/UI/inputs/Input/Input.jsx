@@ -16,7 +16,7 @@ function Input(props) {
           hint={props.hint}
         /> : <div></div>
         }        
-        <input name = {props.name} type="text" onChange={props.changeHandler} value={props.data} placeholder={props.placeholder} />
+        <input name = {props.name} type={props.type} onChange={props.changeHandler} value={props.data} placeholder={props.placeholder} />
       </div>
     </div>
   )

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import classes from './Auth.module.scss'
 import PrimaryButton from '../../UI/buttons/PrimaryButton/PrimaryButtonLarge'
-import ImputLarge from '../../UI/inputs/InputLarge/ImputLarge'
+import InputLarge from '../../UI/inputs/InputLarge/InputLarge'
 import { useHttp } from '../../../hooks/http.hook'
 import { AuthContext } from '../../../context/AuthContext'
 import Link from '../../UI/Links/Link/Link'
@@ -66,7 +66,7 @@ function Auth() {
         {
           !isRegistration
             ? <div className={classes.inputs_container}>
-              <ImputLarge
+              <InputLarge
                 placeholder={'email'}
                 type={'text'}
                 name={'email'}
@@ -74,7 +74,7 @@ function Auth() {
                 disabled={loading}
 
               />
-              <ImputLarge
+              <InputLarge
                 placeholder={'password'}
                 type={'password'}
                 name={'password'}
@@ -93,7 +93,7 @@ function Auth() {
               />
             </div> // регистрация
             : <div className={classes.inputs_container}>
-              <ImputLarge
+              <InputLarge
                 placeholder={'email'}
                 type={'text'}
                 name={'email'}
@@ -101,7 +101,7 @@ function Auth() {
                 disabled={loading}
 
               />
-              <ImputLarge
+              <InputLarge
                 placeholder={'password'}
                 type={'password'}
                 name={'password'}
@@ -109,7 +109,7 @@ function Auth() {
                 disabled={loading}
 
               />
-              <ImputLarge
+              <InputLarge
                 placeholder={'nickname'}
                 type={'text'}
                 name={'nickname'}
@@ -117,7 +117,7 @@ function Auth() {
                 disabled={loading}
 
               />
-              <ImputLarge
+              <InputLarge
                 placeholder={'Ссылка на аватарку'}
                 type={'text'}
                 name={'avatarLink'}

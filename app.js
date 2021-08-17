@@ -21,6 +21,7 @@ app
   .use(multer({ storage: storage }).single("file"))
   .use('/api/auth', require('./routes/auth.routes'))
   .use('/api/upload', require('./routes/upload.routes'))
+  .use('/api/packsLibrary', require('./routes/packsLibrary.routes'))
   .use(require('cors')())
 
 

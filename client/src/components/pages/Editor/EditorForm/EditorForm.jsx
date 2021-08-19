@@ -79,12 +79,12 @@ function EditorForm(props) {
       </div>
       <div className={classes.EditorForm_body}>
         {
-          props.state.numberOfRounds == 0
+          props.state.numberOfRounds === 0
             ? <Hint
               type={'large'}
               text={'Задайте кол-во раундов'}
             />
-            : <> {props.state.rounds.map((round, index, rounds) => {
+            : <> {props.state.rounds.map((round, index) => {
               if (index < props.state.numberOfRounds && !('FinalName' in round)) {
                 return <Round
                   key={index}
@@ -95,7 +95,7 @@ function EditorForm(props) {
                   roundNumber={index + 1}
                   inputPlaceholder={'Название раунда'}
                 >
-                  {props.state.numberOfThemes == 0 ?
+                  {props.state.numberOfThemes === 0 ?
                     <Hint
                       text={'Задайте кол-во тем'}
                     />
@@ -128,11 +128,11 @@ function EditorForm(props) {
                           }
 
                         </Theme>
-                      }
+                      } else return null
                     })
                   }
                 </Round>
-              }
+              } else return null
             })}
               <Round
                 inputName={'FinalName'}
@@ -155,10 +155,10 @@ function EditorForm(props) {
       </div>
       <div className={classes.EditorForm_footer}>
         <button disabled={
-          props.state.numberOfRounds == 0
-          || props.state.numberOfThemes == 0
-          || props.state.numberOfQuestions == 0
-          || props.state.numberOfFinalThemes == 0
+          props.state.numberOfRounds === 0
+          || props.state.numberOfThemes === 0
+          || props.state.numberOfQuestions === 0
+          || props.state.numberOfFinalThemes === 0
         }
         onClick={props.onSave}
         > Создать пак </button>

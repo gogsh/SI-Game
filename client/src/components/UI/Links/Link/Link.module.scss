@@ -1,9 +1,10 @@
-.Link {
-  margin-top: 10px;
-  font-weight: 600;
-  font-size: 18px;
-  color: #3A71CD;
-  > a {
+.Link { 
+  > button {
+    background: none;
+    color: #3a71cd;
+    margin-top: 10px;
+    font-weight: nornal;
+    font-size: 18px;
     cursor: pointer;
     &:hover {
       text-decoration: underline;

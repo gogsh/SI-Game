@@ -1,6 +1,5 @@
 import React from 'react'
 import classes from './About.module.scss'
-import Link from '../Links/Link/Link'
 import { NavLink } from 'react-router-dom'
 
 function About(props) {
@@ -25,16 +24,13 @@ function About(props) {
             <li>Картинка: просто укажите ссылку на неё, скопировав URL</li>
             <li>Видео: в разработке</li>
             <li>Музыка: в разработке</li>
-          </ul>          
+          </ul>
         </div>
-        </div>
-
-
-
-        {props.children}
       </div>
-      )
+      {props.children}
+    </div>
+  )
 }
 
-      export default About
+export default About
 

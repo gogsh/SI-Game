@@ -9,17 +9,7 @@
       color: rgba(0, 0, 0, 0.5);
       height: 62px;
     }
-  }
-  // > thead {
-  //   tr {
-  //     color: rgba(0, 0, 0, 0.87);
-  //     border: none;
-  //     > th {
-  //       border: none;
-  //       padding: 0 0 0 0;
-  //     }
-  //   }
-  // }
+  }  
   > tbody {
     > tr {
       height: 62px;
@@ -30,6 +20,7 @@
         > button {
           background: #3a71cd;
           border-radius: 2px;
+          width: 100%;
           font-size: 18px;
           line-height: 22px;
           text-align: center;

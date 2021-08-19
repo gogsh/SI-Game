@@ -1,8 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import classes from './Upload.module.scss'
-
-
-
+import React from 'react'
 
 function Upload(props) {
   return (

@@ -6,10 +6,10 @@ import Dropdown from '../../UI/Dropdown/Dropdown'
 import LibraryTable from '../LibraryTable/LibraryTable'
 import PackSelectionCard from './PackSelectionCard/PackSelectionCard'
 import Loader from '../../UI/Loader/Loader'
-import PrimaryButton from '../../UI/buttons/PrimaryButton/PrimaryButtonLarge'
+import { Link } from 'react-router-dom'
 
 function LobbyCreator({ modalActive, setModalActive, lobbyData, allPacks, loading, changeHandlers, createGame }) {
-
+  
   return (
     <Modal
       active={modalActive}
@@ -26,15 +26,15 @@ function LobbyCreator({ modalActive, setModalActive, lobbyData, allPacks, loadin
                 data={lobbyData.name}
                 changeHandler={changeHandlers.onChangeInput}
                 name={'name'}
-                placeholder={'Название пака'}
+                placeholder={'Название лобби'}
               />
               <Input
                 lableText={'Пароль'}
                 data={lobbyData.password}
                 changeHandler={changeHandlers.onChangeInput}
                 name={'password'}
-                placeholder={'Название пака'}
-                type={'password'}
+                placeholder={'Пароль от лобби'}
+                type={'text'}
               />
             </div>
             <div className={classes.LobbyCreator__header__rightSide}>
@@ -49,7 +49,7 @@ function LobbyCreator({ modalActive, setModalActive, lobbyData, allPacks, loadin
             </div>
           </div>
         </div>
-        <span>{!lobbyData.isSelected? 'Выберите пак' : 'Пак выбран'}</span>
+        <span>{!lobbyData.isSelected ? 'Выберите пак' : 'Пак выбран'}</span>
 
         {!loading ?
           !lobbyData.isSelected
@@ -63,7 +63,9 @@ function LobbyCreator({ modalActive, setModalActive, lobbyData, allPacks, loadin
               <div className={classes.LobbyCreator__info}>
                 <span>SI GAME</span>
                 <button className={classes.LobbyCreator__button_chooseOther} name={'isSelected'} onClick={changeHandlers.onChangeInput}> Выбрать другой </button>
-                <button className={classes.LobbyCreator__button_createPack} onClick={createGame}> Создать пак </button>
+                <Link to='/playingRoom' className={classes.LobbyCreator__button_container}>
+                  <button className={classes.LobbyCreator__button_createPack} onClick={createGame}> Создать пак </button>
+                </Link>
               </div>
             </div>
           :

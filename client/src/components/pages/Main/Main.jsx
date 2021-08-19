@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useReducer, useState } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
-import { chatSocket } from '../../../socket'
+import { chatSocket, lobbySocket } from '../../../socket'
 import { useHttp } from '../../../hooks/http.hook'
 
 import classes from './Main.module.scss'
@@ -16,24 +16,33 @@ import SecondaryButton from '../../UI/buttons/SecondaryButton/SecondaryButtonLar
 import Chat from '../../UI/Chat/Chat'
 import LobbyCreator from '../../complexed/LobbyCreator/LobbyCreator'
 
-import reducer from '../../../reducer/messageReducer'
+import messageReducer from '../../../reducers/messageReducer'
+import createdLobbysReducer from '../../../reducers/createdLobbysReducer'
+
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 
 
 function Main() {
-  // usee data:
+  // user data:
   const Auth = useContext(AuthContext)
+
+  // lobbys data:
+  const [createdLobbys, createdLobbysDispatch] = useReducer(createdLobbysReducer, [])
   // chat:
-  const [messages, dispatch] = useReducer(reducer, [])
+  const [messages, dispatch] = useReducer(messageReducer, [])
+
 
   // create lobby:
+  const { loading, request } = useHttp()
+
   const [modalActive, setModalActive] = useState(false)
-  const { loading, request, error } = useHttp()
   const [lobbyData, setLobbyData] = useState({
-    name: '',
+    name: 'фывфыв',
     password: '',
-    numberOfPlayers: 1,
-    isSelected: false,    
+    numberOfPlayers: 2,
+    isSelected: false,
     packId: null,
     difficulty: null,
     numberOfRounds: null,
@@ -43,13 +52,14 @@ function Main() {
   const [allPacks, setAllPacks] = useState([])
 
   const modalChangeHandlers = {
-    onChangeInput : (e) => {
+    onChangeInput: (e) => {
       e.preventDefault()
+      e.stopPropagation()
       setLobbyData({
         ...lobbyData,
         [e.target.name]: e.target.value
       })
-    },  
+    },
     onChangeDropdown: (e) => {
       e.preventDefault()
       setLobbyData({
@@ -60,17 +70,18 @@ function Main() {
     onClickSelectedPack: (e) => {
       e.preventDefault()
       const dataArr = e.target.name.split('__')
-      console.log(dataArr)
-      setLobbyData({
-        ...lobbyData,
-        packId: allPacks[Number(dataArr[1])]._id,
-        difficulty: Number(dataArr[3]),
-        numberOfRounds:  Number(dataArr[2]),
-        isSelected: true,
-        logo: dataArr[4],
-        packName: dataArr[5]
-      })
-      console.log(lobbyData)
+      const formIsValid = validateFields()
+      if (formIsValid) {
+        setLobbyData({
+          ...lobbyData,
+          packId: allPacks[Number(dataArr[1])]._id,
+          difficulty: Number(dataArr[3]),
+          numberOfRounds: Number(dataArr[2]),
+          isSelected: true,
+          logo: dataArr[4],
+          packName: dataArr[5]
+        })
+      }
     }
   }
 
@@ -82,16 +93,43 @@ function Main() {
       payload: message
     })
   }
+  const showLobbys = (lobbys) => {
+    createdLobbysDispatch({
+      type: 'ADD_LOBBYS',
+      payload: lobbys
+    })
+  }
+
 
   useEffect(() => {
     chatSocket.on('CHAT:NEW_MESSAGE', addMessage)
+    chatSocket.emit('LOBBY:GET_LOBBYS', showLobbys)
   }, [])
 
-  function createGameHandler(e) {
-    console.log('123')
+  useEffect(() => {
+    chatSocket.on('LOBBY:INFO', showLobbys)
+  }, [createdLobbys])
+
+
+
+
+  function validateFields() {
+    if (lobbyData.name.length < 5) {
+      toast.error('Название лобби должно быть длиннее 4 символов')
+      return false
+    }
+    if (lobbyData.numberOfPlayers === 1) {
+      toast.error('Вы собрались играть в одиночку?')
+      return false
+    }
+    return true
   }
 
-  async function modalOpen (e)  {
+  function createGameHandler(e) {
+    lobbySocket.emit('LOBBY:JOIN', ({ lobbyData, nickname: Auth.nickname, avatarLink: Auth.avatarLink }))
+  }
+
+  async function modalOpen(e) {
     e.preventDefault()
     setModalActive(true)
     const data = await request('/api/packsLibrary/allPacks', 'POST')
@@ -102,6 +140,7 @@ function Main() {
 
   return (
     <div className={classes.Main}>
+      <ToastContainer />
       <SmallColumn>
         <SmallProfile
           userName={Auth.nickname}
@@ -112,7 +151,7 @@ function Main() {
           onClick={modalOpen}
         />
         <ActiveRooms
-          rooms={[]}
+          rooms={createdLobbys}
           headerAlign={'right'}
           header={'Список игр'}
         />
@@ -135,9 +174,9 @@ function Main() {
         setModalActive={setModalActive}
         lobbyData={lobbyData}
         allPacks={allPacks}
-        loading = {loading}
-        changeHandlers = {modalChangeHandlers}
-        createGame = {createGameHandler}
+        loading={loading}
+        changeHandlers={modalChangeHandlers}
+        createGame={createGameHandler}
       />
 
     </div>

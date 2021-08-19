@@ -4,7 +4,7 @@ import classes from './Link.module.scss'
 function Link(props) {
   return (
     <div className = {classes.Link}>
-      <a onClick={props.onClick}>{props.text}</a>
+      <button onClick={props.onClick}>{props.text}</button>
     </div>
   )
 }

@@ -5,7 +5,7 @@ function PackSelectionCard({ data }) {
   return (
     <div className={classes.PackSelectionCard}>
       <div className={classes.PackSelectionCard_leftSide}>
-        <div><img src={data.logo} /></div>
+        <div><img src={data.logo} alt={''}/></div>
       </div>
       <div className={classes.PackSelectionCard_rightSide}>
         <h1>{data.packName}</h1>

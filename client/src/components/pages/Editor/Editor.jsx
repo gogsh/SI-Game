@@ -2,7 +2,7 @@ import React, { useContext, useState, useReducer } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import { useUploading } from '../../../hooks/uploading.hook'
 import { useHttp } from '../../../hooks/http.hook'
-import reducer from '../../../reducer/editorReducer'
+import reducer from '../../../reducers/editorReducer'
 import { createFinalThemes } from '../../../DataCreators/Pack'
 
 import classes from './Editor.module.scss'
@@ -39,8 +39,8 @@ function Editor() {
   }
 
   const Auth = useContext(AuthContext)
-  const { loading, request, error } = useHttp()
-  const { uploadLoading, uploadRequest, uploadError } = useUploading()
+  const { request } = useHttp()
+  const { uploadRequest } = useUploading()
   const [selectedFile, setSelectedFile] = useState(false)
   const [formData, dispatch] = useReducer(reducer, InitialData)
 

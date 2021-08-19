@@ -1,6 +1,5 @@
 import React from 'react'
 import classes from './LibraryTable.module.scss'
-import Hint from '../../UI/Hint/Hint'
 
 
 function LibraryTable({ data, changeHandler }) {
@@ -20,7 +19,7 @@ function LibraryTable({ data, changeHandler }) {
               <th>
                 <div className={classes.test}>
                   <div className={classes.lobbyAvatar}>
-                    <img src={item.logo} />
+                    <img src={item.logo} alt={''} />
                   </div>
                   <span>{item.name}</span>
                 </div>

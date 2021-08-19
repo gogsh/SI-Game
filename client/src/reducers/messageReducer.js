@@ -1,4 +1,4 @@
-export default (messages, action) => {
+const messageReducer = (messages, action) => {
   switch (action.type) {
     case 'NEW_MESSAGE':
       return [
@@ -9,3 +9,5 @@ export default (messages, action) => {
       return messages
   }
 }
+
+export default messageReducer

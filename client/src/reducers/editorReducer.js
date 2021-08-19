@@ -1,6 +1,6 @@
 import {createRounds, createThemes, createQuestions, createFinalThemes} from '../DataCreators/Pack'
 
-export default (state, action) => {
+const editorReducer = (state, action) => {
   let rounds = state.rounds
   switch (action.type) {
     case 'UPLOADING_DATA':
@@ -236,3 +236,5 @@ export default (state, action) => {
       return state
   }
 }
+
+export default editorReducer

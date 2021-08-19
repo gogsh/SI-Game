@@ -11,4 +11,5 @@ export const socket = io('http://localhost:5000', {
 });
 
 export const chatSocket = io('/main');
+export const lobbySocket = io('/playingRoom');
 

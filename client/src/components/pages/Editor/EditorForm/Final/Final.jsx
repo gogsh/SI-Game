@@ -28,7 +28,7 @@ function Final(props) {
                 <textarea name="_text" id={`${index}-answer`} rows="5" placeholder={'Ответ'} value={theme?.question?.answer?._text || ''} onChange={props.onChangeFinalAnswer}></textarea>
               </div>
             </div>
-          }
+          } else return null
         })
       }
     </div>

@@ -20,7 +20,7 @@ export const useRoutes = isAuthenticated => {
         <Editor />
       </Route>
 
-      <Route path='/playingRoom/:id' exact>
+      <Route path='/playingRoom' exact>
         <PlayingRoom />
       </Route>
 

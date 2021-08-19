@@ -1,0 +1,78 @@
+.Room {
+  display: flex;
+  padding: 10px;
+  border: 1px solid #ffffff;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 90px;
+  line-height: 140%;
+  &:hover {
+    border: 1px solid #3a71cd;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+
+  .Room_leftSide {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 8px 0 8px 0;
+    min-width: 400px;
+    > strong {
+      font-size: 24px;
+      font-weight: bold;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.87) 0%, rgba(0, 0, 0, 0.7395) 43.54%, rgba(0, 0, 0, 0) 54.02%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    > span {
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.37) 0%, rgba(0, 0, 0, 0) 84.37%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 22px;
+    }
+  }
+  .Room_rigthSide {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 8px 0 8px 0;
+    color: rgba(0, 0, 0, 0.37);
+    line-height: 140%;
+    font-size: 22px;
+    .Room_rigthSide_images {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      .Room_rigthSide_images_container {
+        width: 100%;
+        width: 25px;
+        height: 25px;
+        border-radius: 100%;
+        object-fit: cover;
+        > img {
+          width: 25px;
+          height: 25px;
+          border-radius: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}
+
+.Room:hover::before {
+  font-size: 24px;
+  width: 50px;
+  text-align: center;
+  content: "ВОЙТИ";
+  position: absolute;
+  z-index: 2;
+  margin-left: 250px;
+  margin-top: 24px;
+  color: #3a71cd;
+  font-weight: 300;
+  font-size: 36px;
+  border: 2px solid #ffffff;
+  background: #ffffff;
+}

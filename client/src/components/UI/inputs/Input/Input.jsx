@@ -3,7 +3,6 @@ import classes from './Input.module.scss'
 import HintIcon from '../../Icon/HintIcon'
 
 function Input(props) {
-  
   return (
     <div className={classes.Input}>
       <span>{props.lableText}</span>

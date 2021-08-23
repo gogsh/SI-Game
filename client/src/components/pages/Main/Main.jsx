@@ -18,6 +18,7 @@ import LobbyCreator from '../../complexed/LobbyCreator/LobbyCreator'
 
 import messageReducer from '../../../reducers/messageReducer'
 import createdLobbysReducer from '../../../reducers/createdLobbysReducer'
+import {createGameStatus} from '../../../DataCreators/Lobby'
 
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -33,6 +34,7 @@ function Main() {
   // chat:
   const [messages, dispatch] = useReducer(messageReducer, [])
 
+  console.log(createdLobbys)
 
   // create lobby:
   const { loading, request } = useHttp()
@@ -47,7 +49,8 @@ function Main() {
     difficulty: null,
     numberOfRounds: null,
     logo: '',
-    packName: ''
+    packName: '',
+    gameStatus: createGameStatus()
   })
   const [allPacks, setAllPacks] = useState([])
 
@@ -85,6 +88,17 @@ function Main() {
     }
   }
 
+  const joinLobby = (e) => {
+    const data = e.target.id.split('__')
+    console.log(createdLobbys)
+    console.log(data)
+    if (data[1] !== 'FULL') {
+      lobbySocket.emit('LOBBY:JOIN', ({ lobbyId: data[0], nickname: Auth.nickname, avatarLink: Auth.avatarLink }))
+    } else {
+      e.preventDefault()
+      toast.error('Достигнут максимум игроков')
+    }
+  }
 
   const addMessage = (message) => {
     console.log('from back', message)
@@ -103,13 +117,15 @@ function Main() {
 
   useEffect(() => {
     chatSocket.on('CHAT:NEW_MESSAGE', addMessage)
-    chatSocket.emit('LOBBY:GET_LOBBYS', showLobbys)
+    if (createdLobbys.length < 1) {
+      chatSocket.on('LOBBY:INFO', showLobbys)
+      chatSocket.emit('LOBBY:GET_LOBBYS', showLobbys)
+    }
+    return () => createdLobbysDispatch({
+      type: 'ADD_LOBBYS',
+      payload: []
+    })
   }, [])
-
-  useEffect(() => {
-    chatSocket.on('LOBBY:INFO', showLobbys)
-  }, [createdLobbys])
-
 
 
 
@@ -126,7 +142,7 @@ function Main() {
   }
 
   function createGameHandler(e) {
-    lobbySocket.emit('LOBBY:JOIN', ({ lobbyData, nickname: Auth.nickname, avatarLink: Auth.avatarLink }))
+    lobbySocket.emit('LOBBY:CREATE', ({ lobbyData, nickname: Auth.nickname, avatarLink: Auth.avatarLink }))
   }
 
   async function modalOpen(e) {
@@ -154,6 +170,7 @@ function Main() {
           rooms={createdLobbys}
           headerAlign={'right'}
           header={'Список игр'}
+          joinLobby={joinLobby}
         />
       </SmallColumn>
 

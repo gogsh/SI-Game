@@ -22,6 +22,7 @@ function ActiveRooms(props) {
               <Room
                 key={index}
                 roomData={room}
+                joinLobby={props.joinLobby}
               />
             )
           }) : <Hint text={'Комнат нет'} />

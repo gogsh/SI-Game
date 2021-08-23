@@ -62,17 +62,18 @@
 }
 
 .Room:hover::before {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 24px;
-  width: 50px;
+  width: 620px;
+  height: 90px;
+  margin: -10px;
   text-align: center;
   content: "ВОЙТИ";
-  position: absolute;
+  position: fixed;
   z-index: 2;
-  margin-left: 250px;
-  margin-top: 24px;
   color: #3a71cd;
   font-weight: 300;
   font-size: 36px;
-  border: 2px solid #ffffff;
-  background: #ffffff;
 }

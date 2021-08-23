@@ -184,7 +184,6 @@ function Editor() {
     }
 
     if (parsedData.finalRound) {
-      console.log('финал есть')
       stateData.finalRound.themes = parsedData.finalRound.themes ? parsedData.finalRound.themes.map(item => {
         if (Array.isArray(item?.question?.questionContent)) {
           return {

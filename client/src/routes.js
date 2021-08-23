@@ -24,6 +24,7 @@ export const useRoutes = isAuthenticated => {
         <PlayingRoom />
       </Route>
 
+      {/* main */}
       <Redirect to='/main'/>
 
     </Switch>

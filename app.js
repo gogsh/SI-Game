@@ -62,7 +62,6 @@ chat.on('connection', (socket) => {
   });
   chat.emit('LOBBY:INFO', lobbys)
   socket.on('LOBBY:GET_LOBBYS', () => {
-    console.log('getLOBBYS')
     chat.emit('LOBBY:INFO', lobbys)
   })
 })
@@ -70,30 +69,46 @@ chat.on('connection', (socket) => {
 
 
 lobby.on('connection', (socket) => {
-  console.log('lobby')
-  socket.on('LOBBY:JOIN', ({ lobbyData, nickname, avatarLink }) => {
+  socket.on('LOBBY:CREATE', ({ lobbyData, nickname, avatarLink }) => {
+    console.log(`LOBBY: user create lobby`)
     let lobbyId = crypto.createHmac('sha1', lobbyData.packId)
       .update(lobbyData.name)
       .digest('hex')
     socket.join(lobbyId)
     lobbys.push(lobbyData)
     lobbys[lobbys.length - 1]['lobbyId'] = lobbyId
-    
-    // TODO: refactor
-    if (lobbys[lobbys.length - 1]['players']) {
-      lobbys[lobbys.length - 1]['players'] = [
-        lobbys[lobbys.length - 1]['players'], { nickname, avatarLink }
-      ]
-    } else {
-      lobbys[lobbys.length - 1]['players'] = [{ nickname, avatarLink }]
-    }
+    console.log(lobbys)
 
-    lobby.to(lobbyId).emit('LOBBY:JOIN', lobbys)
+    // TODO: refactor    
+    lobbys[lobbys.length - 1]['players'] = [{ nickname, avatarLink }]
+
+    lobby.to(lobbyId).emit('LOBBY:JOIN', getLobby(lobbys, lobbyId))
+    chat.emit('LOBBY:INFO', lobbys)
+  })
+
+  socket.on('LOBBY:JOIN', ({ lobbyId, nickname, avatarLink }) => {
+    console.log(`LOBBY: user connected`)
+    socket.join(lobbyId)
+    lobbys.forEach(lobby => {
+      if (lobby.lobbyId === lobbyId) {
+        lobby.players.push({ nickname, avatarLink })
+      }
+    })
+    lobby.to(lobbyId).emit('LOBBY:JOIN', getLobby(lobbys, lobbyId))
     chat.emit('LOBBY:INFO', lobbys)
   })
 })
 
-
+function getLobby(lobbys, lobbyId) {
+  let result
+  lobbys.forEach(lobby => {
+    if (lobby.lobbyId === lobbyId) {
+      result = lobby
+      return
+    }
+  })
+  return result
+}
 
 
 async function start() {

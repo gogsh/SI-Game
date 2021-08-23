@@ -6,11 +6,11 @@ const Pack = require('../models/Pack/Pack')
 const lobby = new Map()
 
 router.post(
-  '/createLobby',
+  '/getPackData',
   async (req, res) => {
     try {
       // Проверка на название
-      console.log()
+      console.log(req.body)
       res.status(200).json({message: 'лобби успешно создано'})
     } catch (error) {
       console.log(error)

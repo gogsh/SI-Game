@@ -1,0 +1,40 @@
+.ButtonsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  height: 56px;
+  margin-top: 28px;
+  margin-bottom: 28px;
+  .IconicButton {
+    height: 56px;
+    width: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #3a71cd;
+    box-sizing: border-box;
+    border-radius: 6px;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.1);
+    transition: box-shadow 0.3s ease;
+    &:hover {
+      box-shadow: 0px 0px 20px rgba(24, 82, 182, 0.1);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  }
+  .Button {
+    height: 100%;
+    background: #3a71cd;
+    border-radius: 6px;
+    font-size: 22px;
+    padding: 0px 40px 2px 40px;
+    color: rgb(255, 255, 255);
+    transition: background 0.3s ease;
+    &:hover {
+      background: #3268c5;
+      box-shadow: 0px 0px 10px rgba(58, 113, 205, 0.1);
+    }
+  }
+}

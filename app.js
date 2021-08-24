@@ -94,8 +94,42 @@ lobby.on('connection', (socket) => {
         lobby.players.push({ nickname, avatarLink })
       }
     })
+    console.log(lobbys)
     lobby.to(lobbyId).emit('LOBBY:JOIN', getLobby(lobbys, lobbyId))
     chat.emit('LOBBY:INFO', lobbys)
+  })
+
+  socket.on('LOBBY:UPDATE_STATE', (newState) => {
+    console.log(`LOBBY: UPDATE_STATE`)
+    console.log(newState.gameStatus)
+    id = newState.lobbyId
+    lobbys.forEach((lobby, index) => {
+      if (lobby.lobbyId === id) {
+        lobbys[index] = {
+          ...newState
+        }
+      }
+    })
+    lobby.to(id).emit('LOBBY:UPDATE_STATE', getLobby(lobbys, id))
+  })
+  socket.on('LOBBY:DISCONNECT', ({ nickname, lobbyId }) => {
+    socket.leave(lobbyId)
+    console.log(nickname, lobbyId)
+    console.log(`LOBBY:DISCONNECT`)
+    const lobbyState = getLobby(lobbys, lobbyId)
+    console.log(lobbyState)
+    lobbyState.players = lobbyState.players.map(item => {
+      if (item.nickname !== nickname) {
+        return item
+      }
+    })
+    lobbyState.gameStatus.players = lobbyState.gameStatus.players.map(item => {
+      if (item.nickname !== nickname) {
+        return item
+      }
+    })
+
+    lobby.to(id).emit('LOBBY:UPDATE_STATE', getLobby(lobbys, id))
   })
 })
 

@@ -34,7 +34,6 @@ function Main() {
   // chat:
   const [messages, dispatch] = useReducer(messageReducer, [])
 
-  console.log(createdLobbys)
 
   // create lobby:
   const { loading, request } = useHttp()
@@ -90,8 +89,6 @@ function Main() {
 
   const joinLobby = (e) => {
     const data = e.target.id.split('__')
-    console.log(createdLobbys)
-    console.log(data)
     if (data[1] !== 'FULL') {
       lobbySocket.emit('LOBBY:JOIN', ({ lobbyId: data[0], nickname: Auth.nickname, avatarLink: Auth.avatarLink }))
     } else {

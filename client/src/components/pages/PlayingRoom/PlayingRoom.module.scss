@@ -8,7 +8,8 @@
     justify-content: space-between;
     flex-direction: row;
     width: 100%;
-    margin-top: 35px;
+    margin-top: 15px;
+    margin-bottom: 20px;
     height: 90px;
     .PlayingRoom_header_leftSide {
       align-items: center;
@@ -37,14 +38,58 @@
         color: rgba(0, 0, 0, 0.5);
         transition: color 0.3s ease;
         &:hover {
-          color: #3A71CD !important;
+          color: #3a71cd !important;
         }
       }
     }
   }
   .PlayingRoom_body {
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     flex-direction: column;
+    width: 100%;
+    .PlayingRoom_body_playingArea {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .PlayingRoom_body_playingArea_info {
+        display: flex;
+        flex-direction: column;
+        width: 222px;
+        height: 500px;
+        .PlayingRoom_body_playingArea_info_currentRound {
+          > span {
+            font-size: 24px;
+            line-height: 29px;
+            color: rgba(0, 0, 0, 0.37);
+          }
+          > h1 {
+            font-size: 28px;
+            line-height: 43px;
+            color: rgba(0, 0, 0, 0.87);
+          }
+        }
+        .PlayingRoom_body_playingArea_info_systemMessages {
+          font-size: 18px;
+          line-height: 22px;
+          color: rgba(0, 0, 0, 0.5);
+          margin-top: 24px;
+          height: 140px;
+        }
+      }
+    }
+    .PlayingRoom_body_playingArea_table {
+      height: 500px;
+      width: 1070px;
+      border: 1px solid #d9e4f5;
+      box-sizing: border-box;
+      border-radius: 6px;
+    }
+  }
+  .PlayingRoom_players {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
   }
 }

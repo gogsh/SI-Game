@@ -14,6 +14,7 @@ export function createGameStatus(status, players, gameState) {
     isLoading: true,
     question: createQuestionStatus(),
     players: createPlayers(players || []),
+    leader: null,
     ...gameState
   }
 }

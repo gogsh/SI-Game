@@ -49,6 +49,7 @@ function Main() {
     numberOfRounds: null,
     logo: '',
     packName: '',
+    lobbyId: '',
     gameStatus: createGameStatus()
   })
   const [allPacks, setAllPacks] = useState([])

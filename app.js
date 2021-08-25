@@ -75,12 +75,10 @@ lobby.on('connection', (socket) => {
       .update(lobbyData.name)
       .digest('hex')
     socket.join(lobbyId)
+    lobbyData.gameStatus.players.push(createPlayer(nickname, avatarLink))
+    lobbyData.lobbyId = lobbyId
     lobbys.push(lobbyData)
-    lobbys[lobbys.length - 1]['lobbyId'] = lobbyId
     console.log(lobbys)
-
-    // TODO: refactor    
-    lobbys[lobbys.length - 1]['players'] = [{ nickname, avatarLink }]
 
     lobby.to(lobbyId).emit('LOBBY:JOIN', getLobby(lobbys, lobbyId))
     chat.emit('LOBBY:INFO', lobbys)
@@ -89,9 +87,9 @@ lobby.on('connection', (socket) => {
   socket.on('LOBBY:JOIN', ({ lobbyId, nickname, avatarLink }) => {
     console.log(`LOBBY: user connected`)
     socket.join(lobbyId)
-    lobbys.forEach(lobby => {
+    lobbys.forEach((lobby, index) => {
       if (lobby.lobbyId === lobbyId) {
-        lobby.players.push({ nickname, avatarLink })
+        lobbys[index].gameStatus.players.push(createPlayer(nickname, avatarLink))
       }
     })
     console.log(lobbys)
@@ -99,39 +97,33 @@ lobby.on('connection', (socket) => {
     chat.emit('LOBBY:INFO', lobbys)
   })
 
-  socket.on('LOBBY:UPDATE_STATE', (newState) => {
-    console.log(`LOBBY: UPDATE_STATE`)
-    console.log(newState.gameStatus)
-    id = newState.lobbyId
-    lobbys.forEach((lobby, index) => {
-      if (lobby.lobbyId === id) {
-        lobbys[index] = {
-          ...newState
-        }
-      }
-    })
-    lobby.to(id).emit('LOBBY:UPDATE_STATE', getLobby(lobbys, id))
+  socket.on('LOBBY:SLOT_SELECTED', ({lobbyId, nickname, slotNumber}) => {
+    console.log(`LOBBY:SLOT_SELECTED`)
+    
+    
+
+    lobby.to(lobbyId).emit('LOBBY:SLOT_SELECTED', getLobby(lobbys, lobbyId))
   })
+
   socket.on('LOBBY:DISCONNECT', ({ nickname, lobbyId }) => {
     socket.leave(lobbyId)
     console.log(nickname, lobbyId)
     console.log(`LOBBY:DISCONNECT`)
     const lobbyState = getLobby(lobbys, lobbyId)
-    console.log(lobbyState)
-    lobbyState.players = lobbyState.players.map(item => {
-      if (item.nickname !== nickname) {
-        return item
-      }
-    })
-    lobbyState.gameStatus.players = lobbyState.gameStatus.players.map(item => {
-      if (item.nickname !== nickname) {
-        return item
-      }
-    })
-
-    lobby.to(id).emit('LOBBY:UPDATE_STATE', getLobby(lobbys, id))
+    console.log(lobbyState)    
+    lobby.to(lobbyId).emit('LOBBY:UPDATE_STATE', getLobby(lobbys, lobbyId))
   })
 })
+
+function createPlayer(nickname, avatarLink) {
+  return {
+    name: nickname,
+    avatarLink: avatarLink,
+    score: 0,
+    isLeader: null,
+    slotNumber: null,
+  }
+}
 
 function getLobby(lobbys, lobbyId) {
   let result

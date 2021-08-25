@@ -1,47 +1,58 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import classes from './PlayerCard.module.scss'
 import Icon from '../../../UI/Icon/Icon'
 
-function PlayerCard({ type, slotSelected, slotSelectionHandler}) {
-  const [points, setPoints] = useState('')  
-  // if (slotSelected) return (
-  //   <>
-  //     {type === 'leader' && leaderInfo !== null
-  //       ? <div className={classes.PlayerCard_leader}>
-  //         <img src={leaderInfo.avatarLink} alt="" />
-  //         <strong>{leaderInfo.nickname}</strong>
-  //         <span>ведущий</span>
-  //       </div>
-  //       : <div>
+function PlayerCard({ index, data, slotSelectionHandler }) {
+  let notSelectedPlayer = <div className={classes.PlayerCard_notSelected_player}
+    onClick={slotSelectionHandler}
+    id={`slot-${index}`}
+  >
+    <Icon
+      name={'plus'}
+      size={60}
+      pointerEvents={'none'}
+    ></Icon>
+  </div>
+  let notSelectedLeader = <div className={classes.PlayerCard_notSelected_leader}
+    onClick={slotSelectionHandler}
+    id={`slot-${index}`}
 
-  //       </div>
-  //     }
-  //   </>
-  // )
-  // else return (
-  //   <>
-  //     {
-  //       type === 'leader' ?
-  //         <div className={classes.PlayerCard_notSelected_leader} onClick={slotSelectionHandler} id={type}>
-  //           <Icon
-  //             name={'plus'}
-  //             size={60}
-  //             clickHandler={slotSelectionHandler}
-  //             pointerEvents={'none'}
-  //           ></Icon>
-  //         </div > :
-  //         <div className={classes.PlayerCard_notSelected_player}>
-  //           <Icon
-  //             name={'plus'}
-  //             size={60}
-  //             clickHandler={slotSelectionHandler}
-  //             pointerEvents={'none'}
-  //           ></Icon>
-  //         </div>
-  //     }
-  //   </>
-  // )
-  return <div></div>
+  >
+    <Icon
+      name={'plus'}
+      size={60}
+      pointerEvents={'none'}
+    ></Icon>
+  </div >
+
+  let card = index !== 0
+    ? data.find((item) => {
+      if (index === item.slotNumber) {
+        return <div id={`slot-${index}`} className={classes.PlayerCard_player}>
+          <img src={item.avatarLink} alt="" />
+          <strong>{item.nickname}</strong>
+          <span>ведущий</span>
+        </div>
+      }
+    }) || notSelectedPlayer
+    : data.find((item) => {
+      if (index === item.slotNumber) {
+        return <div className={classes.PlayerCard_leader} id={`slot-${index}`} >
+          <img src={item.avatarLink} alt="" />
+          <strong>{item.nickname}</strong>
+          <span>ведущий</span>
+        </div>
+      } 
+    }) || notSelectedLeader
+  
+
+  return (
+    <>
+      {
+        card
+      }
+    </>
+  )
 }
 
 export default PlayerCard

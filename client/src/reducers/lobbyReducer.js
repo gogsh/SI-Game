@@ -8,22 +8,7 @@ const lobbyReducer = (lobbyState, action) => {
     case 'LOBBY_DATA':
       return {
         ...action.payload,
-      }
-    case 'LEADER_IN':      
-      const test = {
-        ...lobbyState,
-        gameStatus: {
-          ...gameStatus,
-          leader: { 
-            ...action.payload 
-          }
-        }
-      }
-      console.log(test)
-      lobbySocket.emit('LOBBY:UPDATE_STATE', test)  
-      return {
-        ...test
-      }
+      }    
     case 'UPDATE_STATE':
       return {
         ...action.payload

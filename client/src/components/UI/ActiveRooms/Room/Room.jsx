@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 
 
 function Room({ roomData, joinLobby }) {
-  const isFull = roomData.numberOfPlayers >= roomData.players.length + 1
+  const players = roomData.gameStatus.players
+  const isFull = roomData.numberOfPlayers >= players.length + 1
     ? false
     : true
   return (
@@ -18,15 +19,15 @@ function Room({ roomData, joinLobby }) {
         </div>
         <div className={classes.Room_rigthSide}>
           <div className={classes.Room_rigthSide_images}>
-            {roomData.players ?
-              roomData.players.map((player, index) => {
+            {players ?
+              players.map((player, index) => {
                 return <div className={classes.Room_rigthSide_images_container} key={index}>
                   <img src={player.avatarLink} alt="" />
                 </div>
               }) : null
             }
           </div>
-          <span className={classes.Room_rigthSide_currentPlayers}>{`${roomData.players.length}/${roomData.numberOfPlayers}`}</span>
+          <span className={classes.Room_rigthSide_currentPlayers}>{`${players.length}/${roomData.numberOfPlayers}`}</span>
         </div>
       </div>
     </Link>

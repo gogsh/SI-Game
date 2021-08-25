@@ -58,5 +58,6 @@ export function createPlayer(player) {
     avatarLink: player.avatarLink,
     score: 0,
     isLeader: undefined,
+    slotNumber: null,
   }
 }

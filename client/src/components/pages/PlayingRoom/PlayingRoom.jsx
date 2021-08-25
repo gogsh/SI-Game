@@ -16,24 +16,12 @@ import Loader from '../../UI/Loader/Loader'
 
 
 function PlayingRoom() {
-  const initialLobbyState = {
-    name: '',
-    password: '',
-    numberOfPlayers: 0,
-    isSelected: false,
-    packId: null,
-    difficulty: null,
-    numberOfRounds: null,
-    logo: '',
-    packName: '',
-    gameStatus: createGameStatus()
-  }
-
   const Auth = useContext(AuthContext)
 
-  const [lobbyState, lobbyReducerDispatch] = useReducer(lobbyReducer, initialLobbyState)
+  const [lobbyState, lobbyReducerDispatch] = useReducer(lobbyReducer, false)
   const [slotSelected, setSlotSelected] = useState(false)
   const [isLeader, setLeader] = useState(false)
+
 
   const [packData, setPackData] = useState(null)
   const { loading, request, error } = useHttp()
@@ -43,17 +31,18 @@ function PlayingRoom() {
 
   const getLobbyState = (state) => {
     console.log('gettingState =(')
+    console.log('REDUCER: ', state)
     lobbyReducerDispatch({
       type: 'LOBBY_DATA',
       payload: state,
     })
   }
+  
 
   useEffect(() => {
     lobbySocket.on('LOBBY:JOIN', getLobbyState)
     return () => {
-      console.log(lobbyState.lobbyId)
-      lobbySocket.emit('LOBBY:DISCONNECT', {nickname: Auth.nickname, lobbyId: lobbyState.lobbyId})
+      lobbySocket.emit('LOBBY:DISCONNECT', { nickname: Auth.nickname, lobbyId: lobbyState.lobbyId })
     }
   }, [])
 
@@ -74,43 +63,38 @@ function PlayingRoom() {
 
   const changeHandlers = {
     slotSelectionHandler: (e) => {
-      if (e.target.id === 'leader') {
+      const dataArr = e.target.id.split('-')
+      if (dataArr[1] === '0') {
         setLeader(true)
-        const leaderInfo = { nickname: Auth.nickname, avatarLink: Auth.avatarLink }
-        lobbyReducerDispatch({
-          type: 'LEADER_IN',
-          payload: leaderInfo,
-        })
-        // lobbySocket.emit('LOBBY:UPDATE_STATE', lobbyState)        
-
       }
+      lobbySocket.emit('LOBBY:SLOT_SELECTED', { lobbyId: lobbyState.lobbyId, nickname: Auth.nickname, slotNumber: Number(dataArr[1]) })
+
       setSlotSelected(true)
     },
     ButtonsContainer: {
 
     }
   }
-
-  const generatePlayerSlots = (NoP) => {
-    let result = []
-    for (let i = 0; i < NoP - 1; i++) {
-      result.push(<PlayerCard
-        key={i}
-        nickname={'Никнейм'}
-        slotSelected={slotSelected}
-        avatarLink={'https://avatars.mds.yandex.net/get-zen_doc/1888987/pub_5d592ddd9f272100ad6d2183_5d593005ae56cc00ac3bcdf8/scale_1200'}
-        slotSelectionHandler={changeHandlers.slotSelectionHandler}
-      />)
+  
+  function generatePlayerSlots(playersArray, NoP) {
+    const result = []
+    for (let i = 1; i < NoP; i++) {
+      result.push(
+        <PlayerCard
+          key={i}
+          index={i}
+          data={playersArray}
+          slotSelectionHandler={changeHandlers.slotSelectionHandler}
+        />
+      )
     }
     return result
   }
 
-
-
   return (
     <>
       {
-        !loading ?
+        lobbyState ?
           <div className={classes.PlayingRoom}>
             <div className={classes.PlayingRoom_header}>
               <div className={classes.PlayingRoom_header_leftSide}>
@@ -130,9 +114,8 @@ function PlayingRoom() {
                     <h1>{'Название пака'}</h1>
                   </div>
                   <PlayerCard
-                    type={'leader'}
-                    state={lobbyState}
-                    slotSelected={slotSelected}
+                    index={0}
+                    data={lobbyState.gameStatus.players}
                     slotSelectionHandler={changeHandlers.slotSelectionHandler}
                   />
                   <div className={classes.PlayingRoom_body_playingArea_info_systemMessages}>
@@ -150,7 +133,7 @@ function PlayingRoom() {
               />
               <div className={classes.PlayingRoom_players}>
                 {
-                  generatePlayerSlots(lobbyState.numberOfPlayers)
+                  generatePlayerSlots(lobbyState.gameStatus.players, lobbyState.numberOfPlayers)
                 }
               </div>
             </div>

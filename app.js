@@ -69,13 +69,13 @@ chat.on('connection', (socket) => {
 
 
 lobby.on('connection', (socket) => {
-  socket.on('LOBBY:CREATE', ({ lobbyData, nickname, avatarLink }) => {
+  socket.on('LOBBY:CREATE', ({ lobbyData, nickname, avatarLink, userId }) => {
     console.log(`LOBBY: user create lobby`)
     let lobbyId = crypto.createHmac('sha1', lobbyData.packId)
       .update(lobbyData.name)
       .digest('hex')
     socket.join(lobbyId)
-    lobbyData.gameStatus.players.push(createPlayer(nickname, avatarLink))
+    lobbyData.gameStatus.players.push(createPlayer(nickname, avatarLink, userId))
     lobbyData.lobbyId = lobbyId
     lobbys.push(lobbyData)
     console.log(lobbys)
@@ -84,12 +84,12 @@ lobby.on('connection', (socket) => {
     chat.emit('LOBBY:INFO', lobbys)
   })
 
-  socket.on('LOBBY:JOIN', ({ lobbyId, nickname, avatarLink }) => {
+  socket.on('LOBBY:JOIN', ({ lobbyId, nickname, avatarLink, userId }) => {
     console.log(`LOBBY: user connected`)
     socket.join(lobbyId)
     lobbys.forEach((lobby, index) => {
       if (lobby.lobbyId === lobbyId) {
-        lobbys[index].gameStatus.players.push(createPlayer(nickname, avatarLink))
+        lobbys[index].gameStatus.players.push(createPlayer(nickname, avatarLink, userId))
       }
     })
     console.log(lobbys)
@@ -97,30 +97,29 @@ lobby.on('connection', (socket) => {
     chat.emit('LOBBY:INFO', lobbys)
   })
 
-  socket.on('LOBBY:SLOT_SELECTED', ({lobbyId, nickname, slotNumber}) => {
+  socket.on('LOBBY:SLOT_SELECTED', ({ lobbyId, userId, value }) => {
     console.log(`LOBBY:SLOT_SELECTED`)
-    
-    
-
+    console.log(lobbyId, userId, value)
+    changePlayerInfo(lobbys, lobbyId, userId, value)
+    console.log(getLobby(lobbys, lobbyId).gameStatus.players)
     lobby.to(lobbyId).emit('LOBBY:SLOT_SELECTED', getLobby(lobbys, lobbyId))
   })
 
-  socket.on('LOBBY:DISCONNECT', ({ nickname, lobbyId }) => {
+  socket.on('LOBBY:DISCONNECT', ({ lobbyId, userId }) => {
     socket.leave(lobbyId)
-    console.log(nickname, lobbyId)
-    console.log(`LOBBY:DISCONNECT`)
-    const lobbyState = getLobby(lobbys, lobbyId)
-    console.log(lobbyState)    
+    console.log(lobbyId, userId)
+    deletePlayer(lobbys, lobbyId, userId)
+    // console.log('A', a)
     lobby.to(lobbyId).emit('LOBBY:UPDATE_STATE', getLobby(lobbys, lobbyId))
   })
 })
 
-function createPlayer(nickname, avatarLink) {
+function createPlayer(nickname, avatarLink, userId) {
   return {
-    name: nickname,
+    nickname: nickname,
     avatarLink: avatarLink,
     score: 0,
-    isLeader: null,
+    userId: userId,
     slotNumber: null,
   }
 }
@@ -134,6 +133,33 @@ function getLobby(lobbys, lobbyId) {
     }
   })
   return result
+}
+
+function changePlayerInfo(lobbys, lobbyId, userId, value) {
+  lobbys.forEach((lobby, index) => {
+    if (lobby.lobbyId === lobbyId) {
+      lobby.gameStatus.players.forEach((player, i) => {
+        if (player.userId === userId) {
+          Object.assign(lobbys[index].gameStatus.players[i], value)
+          return
+        }
+      })
+      return
+    }
+  })
+}
+
+function deletePlayer(lobbys, lobbyId, userId) {
+  lobbys.forEach((lobby, index) => {
+    if (lobby.lobbyId === lobbyId) {
+      lobby.gameStatus.players.forEach((player, i) => {
+        if (player.userId === userId) {
+          lobbys[index].gameStatus.players.splice(i, 1)
+        }
+      })
+      return
+    }
+  })
 }
 
 

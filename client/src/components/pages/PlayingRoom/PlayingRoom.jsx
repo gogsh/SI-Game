@@ -30,21 +30,30 @@ function PlayingRoom() {
 
 
   const getLobbyState = (state) => {
-    console.log('gettingState =(')
-    console.log('REDUCER: ', state)
     lobbyReducerDispatch({
       type: 'LOBBY_DATA',
       payload: state,
     })
   }
-  
+
+
+
 
   useEffect(() => {
     lobbySocket.on('LOBBY:JOIN', getLobbyState)
     return () => {
-      lobbySocket.emit('LOBBY:DISCONNECT', { nickname: Auth.nickname, lobbyId: lobbyState.lobbyId })
+      lobbySocket.emit('LOBBY:DISCONNECT', {
+        lobbyId: localStorage.currentLobby,
+        userId: Auth.userId
+      })
     }
   }, [])
+
+
+
+  if (lobbyState.lobbyId && localStorage.currentLobby !== lobbyState.lobbyId) {
+    localStorage.setItem('currentLobby', lobbyState.lobbyId)
+  }
 
   useEffect(() => {
     if (lobbyState.packId !== null && packData == null) {
@@ -67,15 +76,19 @@ function PlayingRoom() {
       if (dataArr[1] === '0') {
         setLeader(true)
       }
-      lobbySocket.emit('LOBBY:SLOT_SELECTED', { lobbyId: lobbyState.lobbyId, nickname: Auth.nickname, slotNumber: Number(dataArr[1]) })
-
+      lobbySocket.emit('LOBBY:SLOT_SELECTED', {
+        lobbyId: localStorage.currentLobby,
+        userId: Auth.userId,
+        value: { slotNumber: Number(dataArr[1]) }
+      })
+      lobbySocket.on('LOBBY:SLOT_SELECTED', getLobbyState)
       setSlotSelected(true)
     },
     ButtonsContainer: {
 
     }
   }
-  
+
   function generatePlayerSlots(playersArray, NoP) {
     const result = []
     for (let i = 1; i < NoP; i++) {

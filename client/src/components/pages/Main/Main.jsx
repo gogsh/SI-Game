@@ -91,7 +91,12 @@ function Main() {
   const joinLobby = (e) => {
     const data = e.target.id.split('__')
     if (data[1] !== 'FULL') {
-      lobbySocket.emit('LOBBY:JOIN', ({ lobbyId: data[0], nickname: Auth.nickname, avatarLink: Auth.avatarLink }))
+      lobbySocket.emit('LOBBY:JOIN', ({ 
+        lobbyId: data[0], 
+        nickname: Auth.nickname, 
+        avatarLink: Auth.avatarLink,
+        userId: Auth.userId
+      }))
     } else {
       e.preventDefault()
       toast.error('Достигнут максимум игроков')
@@ -140,7 +145,12 @@ function Main() {
   }
 
   function createGameHandler(e) {
-    lobbySocket.emit('LOBBY:CREATE', ({ lobbyData, nickname: Auth.nickname, avatarLink: Auth.avatarLink }))
+    lobbySocket.emit('LOBBY:CREATE', ({ 
+      lobbyData, 
+      nickname: Auth.nickname, 
+      avatarLink: Auth.avatarLink,
+      userId: Auth.userId
+    }))
   }
 
   async function modalOpen(e) {

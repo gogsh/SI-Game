@@ -3,6 +3,14 @@ import classes from './PlayerCard.module.scss'
 import Icon from '../../../UI/Icon/Icon'
 
 function PlayerCard({ index, data, slotSelectionHandler }) {
+  let selectedPlayerData = data.find((item) => {
+    if (index === item.slotNumber) {
+      console.log('selectedPlayerData')
+      console.log(item)
+      return item
+    }
+  })
+  console.log(selectedPlayerData)
   let notSelectedPlayer = <div className={classes.PlayerCard_notSelected_player}
     onClick={slotSelectionHandler}
     id={`slot-${index}`}
@@ -26,26 +34,17 @@ function PlayerCard({ index, data, slotSelectionHandler }) {
   </div >
 
   let card = index !== 0
-    ? data.find((item) => {
-      if (index === item.slotNumber) {
-        return <div id={`slot-${index}`} className={classes.PlayerCard_player}>
-          <img src={item.avatarLink} alt="" />
-          <strong>{item.nickname}</strong>
-          <span>ведущий</span>
-        </div>
-      }
-    }) || notSelectedPlayer
-    : data.find((item) => {
-      if (index === item.slotNumber) {
-        return <div className={classes.PlayerCard_leader} id={`slot-${index}`} >
-          <img src={item.avatarLink} alt="" />
-          <strong>{item.nickname}</strong>
-          <span>ведущий</span>
-        </div>
-      } 
-    }) || notSelectedLeader
-  
-
+    ? selectedPlayerData ? <div id={`slot-${index}`} className={classes.PlayerCard_player}>
+      <img src={selectedPlayerData.avatarLink} alt="" />
+      <strong>{selectedPlayerData.nickname}</strong>
+      <span>игрок</span>
+    </div> : notSelectedPlayer
+    : selectedPlayerData ? <div className={classes.PlayerCard_leader} id={`slot-${index}`} >
+      <img src={selectedPlayerData.avatarLink} alt="" />
+      <strong>{selectedPlayerData.nickname}</strong>
+      <span>ведущий</span>
+    </div>
+      : notSelectedLeader
   return (
     <>
       {

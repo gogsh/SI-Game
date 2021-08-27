@@ -6,13 +6,11 @@ const lobbyReducer = (lobbyState, action) => {
   const gameStatus = lobbyState.gameStatus
   switch (action.type) {
     case 'LOBBY_DATA':
-      return {
-        ...action.payload,
-      }    
+      return action.payload
+          
     case 'UPDATE_STATE':
-      return {
-        ...action.payload
-      }
+      return action.payload
+      
     default:
       return lobbyState
   }

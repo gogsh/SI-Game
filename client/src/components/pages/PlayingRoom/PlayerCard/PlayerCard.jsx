@@ -10,7 +10,6 @@ function PlayerCard({ index, data, slotSelectionHandler }) {
       return item
     }
   })
-  console.log(selectedPlayerData)
   let notSelectedPlayer = <div className={classes.PlayerCard_notSelected_player}
     onClick={slotSelectionHandler}
     id={`slot-${index}`}
@@ -36,8 +35,10 @@ function PlayerCard({ index, data, slotSelectionHandler }) {
   let card = index !== 0
     ? selectedPlayerData ? <div id={`slot-${index}`} className={classes.PlayerCard_player}>
       <img src={selectedPlayerData.avatarLink} alt="" />
-      <strong>{selectedPlayerData.nickname}</strong>
-      <span>игрок</span>
+      <div className={classes.PlayerCard_player_rightSide}>
+        <span>{selectedPlayerData.nickname}</span>
+        <strong>{selectedPlayerData.score}</strong>
+      </div>
     </div> : notSelectedPlayer
     : selectedPlayerData ? <div className={classes.PlayerCard_leader} id={`slot-${index}`} >
       <img src={selectedPlayerData.avatarLink} alt="" />

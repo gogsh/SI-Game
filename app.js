@@ -3,13 +3,14 @@ const config = require('config')
 const mongoose = require('mongoose')
 const multer = require("multer")
 const crypto = require('crypto')
+const lobbyHelpers = require('./helpers/lobbyHelpers')
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/')
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '.zip') //Appending .jpg
+    cb(null, Date.now() + '.zip') 
   }
 })
 
@@ -66,7 +67,7 @@ chat.on('connection', (socket) => {
   })
 })
 
-
+console.log(lobbyHelpers)
 
 lobby.on('connection', (socket) => {
   socket.on('LOBBY:CREATE', ({ lobbyData, nickname, avatarLink, userId }) => {
@@ -75,12 +76,12 @@ lobby.on('connection', (socket) => {
       .update(lobbyData.name)
       .digest('hex')
     socket.join(lobbyId)
-    lobbyData.gameStatus.players.push(createPlayer(nickname, avatarLink, userId))
+    lobbyData.gameStatus.players.push(lobbyHelpers.createPlayer(nickname, avatarLink, userId))
     lobbyData.lobbyId = lobbyId
     lobbys.push(lobbyData)
     console.log(lobbys)
 
-    lobby.to(lobbyId).emit('LOBBY:JOIN', getLobby(lobbys, lobbyId))
+    lobby.to(lobbyId).emit('LOBBY:UPDATE_STATE', lobbyHelpers.getLobby(lobbys, lobbyId))
     chat.emit('LOBBY:INFO', lobbys)
   })
 
@@ -89,79 +90,30 @@ lobby.on('connection', (socket) => {
     socket.join(lobbyId)
     lobbys.forEach((lobby, index) => {
       if (lobby.lobbyId === lobbyId) {
-        lobbys[index].gameStatus.players.push(createPlayer(nickname, avatarLink, userId))
+        lobbys[index].gameStatus.players.push(lobbyHelpers.createPlayer(nickname, avatarLink, userId))
       }
     })
     console.log(lobbys)
-    lobby.to(lobbyId).emit('LOBBY:JOIN', getLobby(lobbys, lobbyId))
+    lobby.to(lobbyId).emit('LOBBY:UPDATE_STATE', lobbyHelpers.getLobby(lobbys, lobbyId))
     chat.emit('LOBBY:INFO', lobbys)
   })
 
   socket.on('LOBBY:SLOT_SELECTED', ({ lobbyId, userId, value }) => {
     console.log(`LOBBY:SLOT_SELECTED`)
     console.log(lobbyId, userId, value)
-    changePlayerInfo(lobbys, lobbyId, userId, value)
-    console.log(getLobby(lobbys, lobbyId).gameStatus.players)
-    lobby.to(lobbyId).emit('LOBBY:SLOT_SELECTED', getLobby(lobbys, lobbyId))
+    lobbyHelpers.changePlayerInfo(lobbys, lobbyId, userId, value)
+    console.log(lobbyHelpers.getLobby(lobbys, lobbyId).gameStatus.players)
+    lobby.to(lobbyId).emit('LOBBY:UPDATE_STATE', lobbyHelpers.getLobby(lobbys, lobbyId))
+
   })
 
   socket.on('LOBBY:DISCONNECT', ({ lobbyId, userId }) => {
     socket.leave(lobbyId)
     console.log(lobbyId, userId)
-    deletePlayer(lobbys, lobbyId, userId)
-    // console.log('A', a)
-    lobby.to(lobbyId).emit('LOBBY:UPDATE_STATE', getLobby(lobbys, lobbyId))
+    lobbyHelpers.deletePlayer(lobbys, lobbyId, userId)
+    lobby.to(lobbyId).emit('LOBBY:UPDATE_STATE', lobbyHelpers.getLobby(lobbys, lobbyId))
   })
 })
-
-function createPlayer(nickname, avatarLink, userId) {
-  return {
-    nickname: nickname,
-    avatarLink: avatarLink,
-    score: 0,
-    userId: userId,
-    slotNumber: null,
-  }
-}
-
-function getLobby(lobbys, lobbyId) {
-  let result
-  lobbys.forEach(lobby => {
-    if (lobby.lobbyId === lobbyId) {
-      result = lobby
-      return
-    }
-  })
-  return result
-}
-
-function changePlayerInfo(lobbys, lobbyId, userId, value) {
-  lobbys.forEach((lobby, index) => {
-    if (lobby.lobbyId === lobbyId) {
-      lobby.gameStatus.players.forEach((player, i) => {
-        if (player.userId === userId) {
-          Object.assign(lobbys[index].gameStatus.players[i], value)
-          return
-        }
-      })
-      return
-    }
-  })
-}
-
-function deletePlayer(lobbys, lobbyId, userId) {
-  lobbys.forEach((lobby, index) => {
-    if (lobby.lobbyId === lobbyId) {
-      lobby.gameStatus.players.forEach((player, i) => {
-        if (player.userId === userId) {
-          lobbys[index].gameStatus.players.splice(i, 1)
-        }
-      })
-      return
-    }
-  })
-}
-
 
 async function start() {
   console.log('startinng...')

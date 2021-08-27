@@ -62,7 +62,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 200px;
+  
   width: 300px;
   padding: 24px;
   border: 1px solid #ececec;
@@ -78,33 +78,40 @@
 
 .PlayerCard_player {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  min-height: 200px;
+  max-height: 160px;
+  width: 300px;
   padding: 24px;
   border: 1px solid #ececec;
   box-sizing: border-box;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
   border-radius: 6px;
-  margin-top: 34px;
   > img {
-    width: 112px;
-    height: 112px;
+    width: 80px;
+    height: 80px;
     border-radius: 100%;
     object-fit: cover;
   }
-  > strong {
-    font-size: 24px;
-    line-height: 29px;
-    color: rgba(0, 0, 0, 0.87);
-    margin-top: 12px;
-  }
-  > span {
-    font-size: 18px;
-    line-height: 22px;
-    color: rgba(0, 0, 0, 0.5);
-    margin-top: 8px;
+  .PlayerCard_player_rightSide {
+    padding-left: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 80px;
+    > strong {
+      font-size: 24px;
+      line-height: 29px;
+      color: rgba(0, 0, 0, 0.87);
+      margin-top: 12px;
+    }
+    > span {
+      font-size: 24px;
+      line-height: 22px;
+      color: rgba(0, 0, 0, 0.5);
+      margin-top: 8px;
+    }
   }
   &:hover {
     box-shadow: 0px 0px 20px rgba(58, 113, 205, 0.1);

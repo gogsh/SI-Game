@@ -40,7 +40,7 @@ function PlayingRoom() {
 
 
   useEffect(() => {
-    lobbySocket.on('LOBBY:JOIN', getLobbyState)
+    lobbySocket.on('LOBBY:UPDATE_STATE', getLobbyState)
     return () => {
       lobbySocket.emit('LOBBY:DISCONNECT', {
         lobbyId: localStorage.currentLobby,
@@ -74,14 +74,16 @@ function PlayingRoom() {
     slotSelectionHandler: (e) => {
       const dataArr = e.target.id.split('-')
       if (dataArr[1] === '0') {
+        console.log('LEADER')
         setLeader(true)
+      } else {
+        setLeader(false)
       }
       lobbySocket.emit('LOBBY:SLOT_SELECTED', {
         lobbyId: localStorage.currentLobby,
         userId: Auth.userId,
         value: { slotNumber: Number(dataArr[1]) }
       })
-      lobbySocket.on('LOBBY:SLOT_SELECTED', getLobbyState)
       setSlotSelected(true)
     },
     ButtonsContainer: {

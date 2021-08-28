@@ -99,6 +99,12 @@
             background: #3268c5;
             box-shadow: 0px 0px 10px rgba(58, 113, 205, 0.1);
           }
+          &:disabled {
+            background: #ffffff;
+            font-weight: normal;
+            border: 1px solid #ECECEC;
+            color: rgba(189, 189, 189, 0.87);
+          }
         }
       }
     }

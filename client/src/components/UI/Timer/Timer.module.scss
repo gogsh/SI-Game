@@ -1,0 +1,15 @@
+.Timer {
+  width: 10%;
+  background: #405474;
+  border-radius: 6px 0px 0px 0px;
+  height: 8px;
+}
+.Timer_back {
+  width: 100%;
+  background: rgba(58, 113, 205, 0.1);
+  border-radius: 6px 6px 0px 0px;
+  height: 8px;
+  display: flex;
+  justify-content: flex-start;
+}
+

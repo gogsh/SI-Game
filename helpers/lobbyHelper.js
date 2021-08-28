@@ -1,5 +1,5 @@
 
-module.exports = lobbyHelpers = {
+module.exports = lobbyHelper = {
   deletePlayer: function (lobbys, lobbyId, userId) {
     lobbys.forEach((lobby, index) => {
       if (lobby.lobbyId === lobbyId) {

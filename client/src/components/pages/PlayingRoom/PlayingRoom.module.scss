@@ -81,9 +81,12 @@
     .PlayingRoom_body_playingArea_table {
       height: 500px;
       width: 1070px;
-      border: 1px solid #d9e4f5;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #ebebeb;
       box-sizing: border-box;
       border-radius: 6px;
+      background-image: url('../../../images/back.png');
     }
   }
   .PlayingRoom_players {

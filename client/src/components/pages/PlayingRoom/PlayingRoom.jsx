@@ -10,6 +10,7 @@ import { createGameStatus } from '../../../DataCreators/Lobby'
 
 
 import PlayerCard from './PlayerCard/PlayerCard'
+import PlayingField from './PlayingField/PlayingField'
 import ButtonsContainer from './ButtonsContainer/ButtonsContainer'
 import Loader from '../../UI/Loader/Loader'
 
@@ -27,6 +28,7 @@ function PlayingRoom() {
   const { loading, request, error } = useHttp()
 
   console.log('LOBBYSTATE:', lobbyState)
+  console.log('PACKDATA', packData)
 
 
   const getLobbyState = (state) => {
@@ -138,7 +140,11 @@ function PlayingRoom() {
                   </div>
                 </div>
                 <div className={classes.PlayingRoom_body_playingArea_table}>
-
+                  <PlayingField
+                    lobbyState={lobbyState}
+                    packData={packData}
+                    isLeader={isLeader}
+                  />
                 </div>
               </div>
               <ButtonsContainer

@@ -5,8 +5,6 @@ import Icon from '../../../UI/Icon/Icon'
 function PlayerCard({ index, data, slotSelectionHandler }) {
   let selectedPlayerData = data.find((item) => {
     if (index === item.slotNumber) {
-      console.log('selectedPlayerData')
-      console.log(item)
       return item
     }
   })

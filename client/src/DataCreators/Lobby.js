@@ -3,6 +3,9 @@ export function createGameStatus(status, players, gameState) {
   // ‘prepairing’ - подготовка к старту игры
   // ‘choosing’ - время на выбор вопроса
   // ‘waiting’ - время на право ответить
+  // showing round - показываем номер раунда (2-3 сек)
+  // showing themes - показываем темы (4-5 секунд)
+  // pause
   return {
     status: status || 'prepairing',
     pause: false,

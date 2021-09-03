@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useState, useContext } from 'react'
 import classes from './PlayingRoom.module.scss'
 import { AuthContext } from '../../../context/AuthContext'
+import { TimerContext } from '../../../context/TimerContext'
 import { lobbySocket } from '../../../socket'
 
 import { useHttp } from '../../../hooks/http.hook'
@@ -90,6 +91,11 @@ function PlayingRoom() {
     },
     ButtonsContainer: {
 
+    },
+    startGameHandler: (e) => {
+      e.preventDefault()
+      console.log(e.tatget)
+
     }
   }
 
@@ -109,7 +115,7 @@ function PlayingRoom() {
   }
 
   return (
-    <>
+    <TimerContext.Provider value={{'choose-who-start': 100}}>
       {
         lobbyState ?
           <div className={classes.PlayingRoom}>
@@ -144,6 +150,7 @@ function PlayingRoom() {
                     lobbyState={lobbyState}
                     packData={packData}
                     isLeader={isLeader}
+                    startGameHandler={changeHandlers.startGameHandler}
                   />
                 </div>
               </div>
@@ -166,7 +173,7 @@ function PlayingRoom() {
           </div>
           : <Loader />
       }
-    </>
+    </TimerContext.Provider>
 
   )
 }

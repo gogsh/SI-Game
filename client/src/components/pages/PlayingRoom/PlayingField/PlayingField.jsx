@@ -4,12 +4,15 @@ import SiLogo from '../../../../images/si.png'
 import Loader from '../../../UI/Loader/Loader'
 import Timer from '../../../UI/Timer/Timer'
 
+import ChooseWhoStart from './ChooseWhoStart/ChooseWhoStart'
+
 import { isUrl } from '../../../../helpers/urlHelper'
 
-function PlayingField({ lobbyState, packData, isLeader }) {
+function PlayingField({ lobbyState, packData, isLeader, startGameHandler }) {
 
   const renderComponent = () => {
     switch (lobbyState.gameStatus.status) {
+      // TODO: make component for prepairing
       case 'prepairing':
         return <div className={classes.PlayingField_prepairing}>
           <div className={classes.PlayingField_prepairing_header}>
@@ -52,15 +55,16 @@ function PlayingField({ lobbyState, packData, isLeader }) {
                 isLeader
                   ? <div className={classes.PlayingField_prepairing_body_rigthSide_container}>
                     {
-                      lobbyState.gameStatus.players.length <= 1 
+                      lobbyState.gameStatus.players.length <= 1
                         ? <span className={classes.PlayingField_prepairing_body_rigthSide_container_alert}>Нужен хотя бы один игрок</span>
                         : lobbyState.numberOfPlayers !== lobbyState.gameStatus.players.length
-                        ? <span className={classes.PlayingField_prepairing_body_rigthSide_container_alert}>Игра начнется в неполном лобби!</span>
-                        : <></>
+                          ? <span className={classes.PlayingField_prepairing_body_rigthSide_container_alert}>Игра начнется в неполном лобби!</span>
+                          : <></>
                     }
                     <button
+                      onClick={startGameHandler}
                       className={classes.PlayingField_prepairing_body_rigthSide_container_button}
-                      disabled={lobbyState.gameStatus.players.length <= 1 ? true : false }>
+                      disabled={lobbyState.gameStatus.players.length <= 1 ? true : false}>
                       Начать игру
                     </button>
                   </div>
@@ -71,15 +75,20 @@ function PlayingField({ lobbyState, packData, isLeader }) {
             </div>
           </div>
         </div>
+      case 'choose-who-start':
+        return <ChooseWhoStart
+          isLeader={isLeader}
+          players= {lobbyState.gameStatus.players}
+        />
       default:
         return <></>
     }
   }
   return (
     <>
-      <Timer
+      {/* <Timer
         time={10}
-      />
+      /> */}
       {
         packData
           ? renderComponent()

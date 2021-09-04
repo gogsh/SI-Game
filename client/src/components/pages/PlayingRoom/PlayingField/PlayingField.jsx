@@ -1,14 +1,35 @@
-import React from 'react'
+import React, { useEffect, useContext } from 'react'
 import classes from './PlayingField.module.scss'
 import SiLogo from '../../../../images/si.png'
 import Loader from '../../../UI/Loader/Loader'
-import Timer from '../../../UI/Timer/Timer'
 
 import ChooseWhoStart from './ChooseWhoStart/ChooseWhoStart'
 
 import { isUrl } from '../../../../helpers/urlHelper'
+import { TimerContext } from '../../../../context/TimerContext'
 
-function PlayingField({ lobbyState, packData, isLeader, startGameHandler }) {
+function PlayingField({ lobbyState, packData, isLeader, startGameHandler, chooseWhoStartHandler }) {
+
+  const Timers = useContext(TimerContext)
+
+  useEffect(() => {
+    console.log('2133131', document.getElementById('runningDiv'))
+    // if (lobbyState.gameStatus.status === 'showing-themes') {
+    //   document.getElementById('runningDiv').animate([
+    //     {
+    //       marginTop: '300px'
+
+    //     },
+    //     {
+    //       marginTop: '-300%'
+
+    //     }
+    //   ], {
+    //     duration: Timers['showing-themes'],
+    //     iterations: Infinity
+    //   });
+    // }
+  }, [])
 
   const renderComponent = () => {
     switch (lobbyState.gameStatus.status) {
@@ -78,17 +99,30 @@ function PlayingField({ lobbyState, packData, isLeader, startGameHandler }) {
       case 'choose-who-start':
         return <ChooseWhoStart
           isLeader={isLeader}
-          players= {lobbyState.gameStatus.players}
+          players={lobbyState.gameStatus.players}
+          chooseWhoStartHandler={chooseWhoStartHandler}
         />
+      case 'showing-round':
+        return <div className={classes.Showing_round}>{
+          packData.rounds[lobbyState.gameStatus.currentRound].RoundName
+          || `Раунд №${lobbyState.gameStatus.currentRound}`
+        }</div>
+      case 'showing-themes':
+        return <div className={classes.Showing_themes}>
+          <div className={classes.Showing_themes_animatedDiv}>
+            {packData.rounds[0].themes.map((theme, index) => {
+              return <div key={index}><span>{theme.themeName}</span></div>
+            })}
+          </div>
+        </div>
+      case 'choosing':
+        return <div>choosing</div>
       default:
         return <></>
     }
   }
   return (
     <>
-      {/* <Timer
-        time={10}
-      /> */}
       {
         packData
           ? renderComponent()

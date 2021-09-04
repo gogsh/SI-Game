@@ -19,10 +19,12 @@ import Loader from '../../UI/Loader/Loader'
 
 function PlayingRoom() {
   const Auth = useContext(AuthContext)
+  const Timers = useContext(TimerContext)
 
   const [lobbyState, lobbyReducerDispatch] = useReducer(lobbyReducer, false)
   const [slotSelected, setSlotSelected] = useState(false)
   const [isLeader, setLeader] = useState(false)
+  const [status, setStatus] = useState('')
 
 
   const [packData, setPackData] = useState(null)
@@ -89,14 +91,45 @@ function PlayingRoom() {
       })
       setSlotSelected(true)
     },
+
+    startGameHandler: (e) => {
+      e.preventDefault()
+      lobbySocket.emit('LOBBY:GAME_START', {
+        lobbyId: localStorage.currentLobby,
+        status: 'choose-who-start',
+      })
+      setStatus('choose-who-start')
+      changeHandlers.timeout = setTimeout(() => {
+        console.log('ЧЕРЕЗ 10 ДОЛЖНО ОТРАБОТАТЬ')
+        lobbySocket.emit('LOBBY:GAME_CHOOSE_WHO_START', {
+          lobbyId: localStorage.currentLobby,
+          status: 'showing-round',
+          whoStart: Math.floor(Math.random() * lobbyState.numberOfPlayers + 1) - 1
+        })
+      }, Timers['choose-who-start'])
+    },
+
+    chooseWhoStartHandler: (e) => {
+      if (e.currentTarget.id !== 'random') {
+        const dataArr = e.currentTarget.id.split('-')
+        lobbySocket.emit('LOBBY:GAME_CHOOSE_WHO_START', {
+          lobbyId: localStorage.currentLobby,
+          status: 'showing-round',
+          whoStart: dataArr[1]
+        })
+      } else {
+        lobbySocket.emit('LOBBY:GAME_CHOOSE_WHO_START', {
+          lobbyId: localStorage.currentLobby,
+          status: 'showing-round',
+          whoStart: Math.floor(Math.random() * lobbyState.numberOfPlayers + 1) - 1
+        })
+      }
+
+    },
+
     ButtonsContainer: {
 
     },
-    startGameHandler: (e) => {
-      e.preventDefault()
-      console.log(e.tatget)
-
-    }
   }
 
   function generatePlayerSlots(playersArray, NoP) {
@@ -115,7 +148,7 @@ function PlayingRoom() {
   }
 
   return (
-    <TimerContext.Provider value={{'choose-who-start': 100}}>
+    <>
       {
         lobbyState ?
           <div className={classes.PlayingRoom}>
@@ -151,6 +184,7 @@ function PlayingRoom() {
                     packData={packData}
                     isLeader={isLeader}
                     startGameHandler={changeHandlers.startGameHandler}
+                    chooseWhoStartHandler={changeHandlers.chooseWhoStartHandler}
                   />
                 </div>
               </div>
@@ -173,7 +207,7 @@ function PlayingRoom() {
           </div>
           : <Loader />
       }
-    </TimerContext.Provider>
+    </>
 
   )
 }

@@ -2,7 +2,6 @@ import { createGameStatus, createQuestionStatus, createPlayers, createPlayer } f
 import { lobbySocket } from '../socket'
 
 const lobbyReducer = (lobbyState, action) => {
-  console.log(lobbyState)
   const gameStatus = lobbyState.gameStatus
   switch (action.type) {
     case 'LOBBY_DATA':

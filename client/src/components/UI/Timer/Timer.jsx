@@ -7,7 +7,7 @@ function Timer({ time }) {
       {width: '0%'},
       {width: '100%'}
     ], {
-      duration: time*1000,
+      duration: time,
       iterations: Infinity
     });
   })

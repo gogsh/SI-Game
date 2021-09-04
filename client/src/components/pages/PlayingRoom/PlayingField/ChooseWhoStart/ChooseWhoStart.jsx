@@ -4,7 +4,7 @@ import Timer from '../../../../UI/Timer/Timer'
 import { TimerContext } from '../../../../../context/TimerContext'
 import RandomImage from './../../../../../images/random.png'
 
-function ChooseWhoStart({ isLeader, players }) {
+function ChooseWhoStart({ isLeader, players, chooseWhoStartHandler }) {
   const Timers = useContext(TimerContext)
   return (
     <>
@@ -23,6 +23,8 @@ function ChooseWhoStart({ isLeader, players }) {
                     return <div
                       key={index}
                       className={classes.ChooseWhoStart_leader_choosePlayer_players_button}
+                      onClick={chooseWhoStartHandler}
+                      id={`choose-${index}`}
                     >
                       <img src={player.avatarLink} alt="" />
                       <span>{player.nickname}</span>
@@ -31,7 +33,9 @@ function ChooseWhoStart({ isLeader, players }) {
                 })
                 }
               </div>
-              <div className={classes.ChooseWhoStart_leader_choosePlayer_players_random}>
+              <div className={classes.ChooseWhoStart_leader_choosePlayer_players_random}
+                onClick={chooseWhoStartHandler}
+                id={'random'}>
                 <img src={RandomImage} alt="" />
                 <span>Выбрать случайно</span>
               </div>

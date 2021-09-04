@@ -8,7 +8,7 @@ export function createGameStatus(status, players, gameState) {
   // showing themes - показываем темы (4-5 секунд)
   // pause
   return {
-    status: status || 'choose-who-start',
+    status: status || 'prepairing',
     pause: false,
     currentRound: '',
     currentTheme: '',

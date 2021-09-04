@@ -10,7 +10,7 @@ var storage = multer.diskStorage({
     cb(null, 'uploads/')
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '.zip') 
+    cb(null, Date.now() + '.zip')
   }
 })
 
@@ -33,6 +33,13 @@ const chatData = new Map([
   ['users', new Map()],
   ['messages', []]
 ])
+
+const Timers = {
+  'choose-who-start': 10000,
+  'showing-round': 3000,
+  'showing-themes': 7500,
+}
+
 const lobbys = []
 
 
@@ -103,8 +110,37 @@ lobby.on('connection', (socket) => {
     lobbyHelper.changePlayerInfo(lobbys, lobbyId, userId, value)
     console.log(lobbyHelper.getLobby(lobbys, lobbyId).gameStatus.players)
     lobby.to(lobbyId).emit('LOBBY:UPDATE_STATE', lobbyHelper.getLobby(lobbys, lobbyId))
+  })
+
+  // GAME
+  socket.on('LOBBY:GAME_START', ({ lobbyId, status }) => {
+    lobbyHelper.gameStart(lobbys, lobbyId, status)
+    lobby.to(lobbyId).emit('LOBBY:UPDATE_STATE', lobbyHelper.getLobby(lobbys, lobbyId))
 
   })
+
+  socket.on('LOBBY:GAME_CHOOSE_WHO_START', ({ lobbyId, status, whoStart }) => {
+    if (lobbyHelper.getLobby(lobbys, lobbyId).gameStatus.status === 'choose-who-start') {
+      lobbyHelper.gameChooseWhoStart(lobbys, lobbyId, status, whoStart)
+      lobby.to(lobbyId).emit('LOBBY:UPDATE_STATE', lobbyHelper.getLobby(lobbys, lobbyId))
+      setTimeout(() => {
+        console.log('showing themes')
+        lobbyHelper.gameChangeStatus(lobbys, lobbyId, 'showing-themes')
+        lobby.to(lobbyId).emit('LOBBY:UPDATE_STATE', lobbyHelper.getLobby(lobbys, lobbyId))
+        setTimeout(() => {
+          lobbyHelper.gameChangeStatus(lobbys, lobbyId, 'choosing')
+          lobby.to(lobbyId).emit('LOBBY:UPDATE_STATE', lobbyHelper.getLobby(lobbys, lobbyId))
+        }, Timers['showing-themes'])
+      }, Timers['showing-round'])
+    }
+  })
+
+  socket.on('LOBBY:GAME_CHANGE_STATUS', ({ lobbyId, status }) => {
+    lobbyHelper.gameChangeStatus(lobbys, lobbyId, status)
+    lobby.to(lobbyId).emit('LOBBY:UPDATE_STATE', lobbyHelper.getLobby(lobbys, lobbyId))
+  })
+
+  // 
 
   socket.on('LOBBY:DISCONNECT', ({ lobbyId, userId }) => {
     socket.leave(lobbyId)

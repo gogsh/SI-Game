@@ -25,6 +25,30 @@ module.exports = lobbyHelper = {
       }
     })
   },
+  gameStart: function (lobbys, lobbyId, status) {
+    lobbys.forEach((lobby, index) => {
+      if(lobby.lobbyId === lobbyId) {
+        lobbys[index].numberOfPlayers = lobbys[index].gameStatus.players.length
+        lobbys[index].gameStatus.status = status
+      }
+    })
+  },
+  gameChangeStatus: function (lobbys, lobbyId, status) {
+    lobbys.forEach((lobby, index) => {
+      if(lobby.lobbyId === lobbyId) {
+        lobbys[index].gameStatus.status = status
+      }
+    })
+  },
+  gameChooseWhoStart: function (lobbys, lobbyId, status, whoStart) {
+    lobbys.forEach((lobby, index) => {
+      if(lobby.lobbyId === lobbyId) {
+        lobbys[index].gameStatus.status = status
+        lobbys[index].gameStatus.whosTurn = lobbys[index].gameStatus.players[Number(whoStart)].slotNumber
+        lobbys[index].gameStatus.currentRound = 1
+      }
+    })
+  },
   getLobby: function (lobbys, lobbyId) {
     let result
     lobbys.forEach(lobby => {
